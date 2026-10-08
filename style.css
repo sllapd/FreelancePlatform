@@ -1,293 +1,320 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --bg: #0f0f0f;
+    --bg-soft: #111111;
+    --panel: #181818;
+    --text: #f3f0ea;
+    --muted: #a4a0a0;
+    --line: rgba(255, 255, 255, 0.08);
+    --accent: #d3b26f;
+    --accent-soft: rgba(211, 178, 111, 0.18);
 }
 
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
-}
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
     font-family: 'Inter', sans-serif;
-    background: #0f0f0f;
-    color: #e5e5e5;
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, .font-display {
-    font-family: 'Playfair Display', serif;
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+.font-display {
+    font-family: 'Cormorant Garamond', serif;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
+.page-glow {
+    position: fixed;
+    width: 42rem;
+    height: 42rem;
+    border-radius: 9999px;
+    filter: blur(120px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatAmbient 16s ease-in-out infinite alternate;
 }
 
-::-webkit-scrollbar-track {
-    background: #0f0f0f;
+.page-glow-one {
+    top: 8%;
+    left: -8%;
+    background: rgba(211, 178, 111, 0.30);
 }
 
-::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 4px;
+.page-glow-two {
+    right: -8%;
+    bottom: 8%;
+    background: rgba(255,255,255,0.05);
+    animation-delay: 2s;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-/* Portfolio Cards */
-.portfolio-card {
+.hero {
     position: relative;
-    overflow: hidden;
-    border: 1px solid #2a2a2a;
-    transition: all 0.4s ease;
-    display: flex;
-    flex-direction: column;
+    isolation: isolate;
+    background: radial-gradient(circle at top left, rgba(211,178,111,0.08), transparent 35%);
 }
 
-.portfolio-card:hover {
-    border-color: #444;
+.hero-copy {
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.9s ease both;
+}
+
+.eyebrow {
+    margin-bottom: 0.8rem;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    min-height: 50px;
+    padding: 0 1.5rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #0f0f0f;
+    border-color: var(--accent);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+}
+
+.stat-item {
+    min-width: 110px;
+    animation: fadeUp 0.9s ease both;
+    animation-delay: 0.1s;
+}
+
+.stat-value {
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 2vw, 3rem);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+}
+
+.portfolio-card,
+.testimonial-card,
+.process-card {
+    background: rgba(255,255,255,0.01);
+    border: 1px solid var(--line);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-card:hover,
+.testimonial-card:hover,
+.process-card:hover {
     transform: translateY(-4px);
+    border-color: rgba(211,178,111,0.35);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+}
+
+.portfolio-card {
+    overflow: hidden;
+    animation: fadeUp 0.8s ease both;
 }
 
 .portfolio-card img {
     width: 100%;
-    height: 300px;
+    height: 360px;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    filter: grayscale(0.2) contrast(1.05);
+    transition: transform 0.5s ease;
 }
 
 .portfolio-card:hover img {
     transform: scale(1.03);
 }
 
-.portfolio-card .content {
-    padding: 2rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: #1a1a1a;
+.card-body {
+    padding: 1.5rem 1.5rem 1.2rem;
 }
 
-.portfolio-card .seller {
+.card-meta {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-}
-
-.portfolio-card .seller img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #2a2a2a;
-}
-
-.portfolio-card .seller-info {
-    flex: 1;
-}
-
-.portfolio-card .seller-name {
-    font-size: 0.875rem;
-    color: #e5e5e5;
-    font-weight: 500;
-}
-
-.portfolio-card .seller-role {
-    font-size: 0.75rem;
-    color: #999;
-    margin-top: 0.25rem;
-}
-
-.portfolio-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.125rem;
-    font-weight: 500;
-    color: #e5e5e5;
-    margin-bottom: 1.5rem;
-    line-height: 1.4;
-}
-
-.portfolio-card .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1.5rem;
-    border-top: 1px solid #2a2a2a;
-}
-
-.portfolio-card .rating {
-    font-size: 0.875rem;
-    color: #c9a961;
-}
-
-.portfolio-card .price {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: #c9a961;
-    font-weight: 500;
-}
-
-/* Category Cards */
-.category-card {
-    position: relative;
-    padding: 2rem;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 180px;
-}
-
-.category-card:hover {
-    border-color: #444;
-    background: #222;
-    transform: translateY(-2px);
-}
-
-.category-card .icon {
-    font-size: 2.5rem;
+    gap: 0.8rem;
     margin-bottom: 1rem;
-    transition: transform 0.3s ease;
 }
 
-.category-card:hover .icon {
-    transform: scale(1.1);
+.card-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    object-fit: cover;
 }
 
-.category-card .name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
+.card-author {
+    font-size: 0.82rem;
+    color: var(--text);
+}
+
+.card-role {
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 2vw, 2.3rem);
+    line-height: 1.05;
+    margin: 0 0 1.2rem;
     font-weight: 500;
-    color: #e5e5e5;
-    margin-bottom: 0.5rem;
+    color: var(--text);
 }
 
-.category-card .count {
-    font-size: 0.75rem;
-    color: #999;
-}
-
-/* Testimonial Cards */
-.testimonial-card {
-    position: relative;
-    padding: 2rem;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    transition: all 0.3s ease;
-}
-
-.testimonial-card:hover {
-    border-color: #444;
-    transform: translateY(-2px);
-}
-
-.testimonial-card .stars {
-    color: #c9a961;
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-    letter-spacing: 2px;
-}
-
-.testimonial-card .text {
-    color: #ccc;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-}
-
-.testimonial-card .author {
+.card-footer {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #2a2a2a;
-}
-
-.testimonial-card .avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #2a2a2a;
-}
-
-.testimonial-card .author-info {
-    flex: 1;
-}
-
-.testimonial-card .author-name {
-    font-weight: 500;
-    color: #e5e5e5;
-    font-size: 0.9rem;
-}
-
-.testimonial-card .author-role {
-    color: #999;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
     font-size: 0.8rem;
-    margin-top: 0.25rem;
 }
 
-/* Buttons */
-button, a[class*="px"][class*="py"][class*="bg"] {
-    position: relative;
-    overflow: hidden;
+.card-price {
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
 }
 
-/* Transitions */
-* {
-    transition-property: background-color, border-color, color, transform;
-    transition-duration: 300ms;
-    transition-timing-function: ease;
+.process-card {
+    padding: 2rem 1.5rem;
+    animation: fadeUp 0.8s ease both;
 }
 
-/* Focus states */
-button:focus-visible,
-a:focus-visible {
-    outline: 1px solid #c9a961;
-    outline-offset: 2px;
+.process-index {
+    display: inline-block;
+    margin-bottom: 1.2rem;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
 }
 
-/* Links */
-a {
-    color: inherit;
-    text-decoration: none;
+.process-card h3 {
+    margin: 0 0 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
 }
 
-/* Selection */
-::selection {
-    background-color: #c9a961;
-    color: #0f0f0f;
+.process-card p,
+.testimonial-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
 }
 
-/* Responsive */
+.testimonial-card {
+    padding: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+}
+
+.testimonial-stars {
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    font-size: 0.72rem;
+    margin-bottom: 1rem;
+}
+
+.testimonial-card p {
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--line);
+}
+
+.testimonial-author img {
+    width: 42px;
+    height: 42px;
+    border-radius: 9999px;
+    object-fit: cover;
+}
+
+.testimonial-name {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+}
+
+.testimonial-role {
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatAmbient {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(30px, -20px, 0) scale(1.08); }
+    100% { transform: translate3d(-20px, 25px, 0) scale(1.02); }
+}
+
 @media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
+    .hero {
+        padding-top: 5rem;
     }
 
-    h2 {
-        font-size: 1.875rem;
+    .btn {
+        width: 100%;
     }
 
-    .portfolio-card img {
-        height: 220px;
+    .hero-copy h1 {
+        font-size: 4.1rem;
     }
+}
 
-    section {
-        padding: 2rem 0 !important;
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
     }
 }
