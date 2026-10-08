@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreelanceHub — Premium Freelance Platform</title>
+    <title>FreelanceHub — Elite Freelance Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,106 +11,191 @@
                 extend: {
                     colors: {
                         'dark': '#0a0a0a',
-                        'dark-secondary': '#1a1a1a',
-                        'dark-tertiary': '#2a2a2a',
+                        'dark-secondary': '#141414',
+                        'dark-tertiary': '#1f1f1f',
+                        'dark-card': '#1a1a1a',
                         'accent': '#d4af37',
-                        'accent-light': '#e8c547'
+                        'accent-light': '#e8c547',
+                        'accent-dark': '#b8941e'
                     },
                     fontFamily: {
                         'display': ['Playfair Display', 'serif'],
                         'sans': ['Inter', 'sans-serif'],
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 3s ease-in-out infinite',
+                        'float': 'float 8s ease-in-out infinite',
+                        'glow': 'glow 4s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slide-up 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                        'fade-in': 'fade-in 0.6s ease-out forwards',
+                        'scale-in': 'scale-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                        'shimmer': 'shimmer 3s infinite',
+                        'float-rotate': 'float-rotate 20s linear infinite',
+                        'slide-right': 'slide-right 0.8s ease-out forwards',
+                        'gradient-shift': 'gradient-shift 6s ease-in-out infinite',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0px) translateX(0)' },
+                            '25%': { transform: 'translateY(-30px) translateX(10px)' },
+                            '50%': { transform: 'translateY(-60px)' },
+                            '75%': { transform: 'translateY(-30px) translateX(-10px)' },
                         },
-                        glow: {
-                            '0%, 100%': { opacity: '0.5' },
-                            '50%': { opacity: '1' },
+                        'glow': {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(1.1)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.6' },
+                        },
+                        'slide-up': {
+                            'from': { opacity: '0', transform: 'translateY(40px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'fade-in': {
+                            'from': { opacity: '0' },
+                            'to': { opacity: '1' },
+                        },
+                        'scale-in': {
+                            'from': { opacity: '0', transform: 'scale(0.85)' },
+                            'to': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        'shimmer': {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
+                        },
+                        'float-rotate': {
+                            'from': { transform: 'rotate(0deg)' },
+                            'to': { transform: 'rotate(360deg)' },
+                        },
+                        'slide-right': {
+                            'from': { opacity: '0', transform: 'translateX(-40px)' },
+                            'to': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        'gradient-shift': {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
                         }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 30px rgba(212, 175, 55, 0.3)',
+                        'glow-lg': '0 0 60px rgba(212, 175, 55, 0.5)',
+                        'card': '0 20px 60px rgba(0, 0, 0, 0.3)',
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-dark text-white antialiased overflow-x-hidden">
 
-    <!-- Навигация -->
-    <header class="fixed top-0 w-full z-50 bg-dark/80 backdrop-blur-xl border-b border-dark-tertiary">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-accent/8 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
+        <div class="absolute top-1/2 right-1/3 w-[400px] h-[400px] bg-accent/3 rounded-full blur-3xl animate-pulse-glow"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-50 backdrop-blur-2xl border-b border-dark-tertiary">
+        <div class="h-1 bg-gradient-to-r from-accent via-accent-dark to-transparent opacity-50"></div>
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-accent font-display font-bold text-2xl tracking-tight">FREELANCE<span class="text-white">•</span>HUB</a>
+            <a href="#" class="text-accent font-display font-bold text-2xl tracking-tight hover:text-accent-light transition duration-500 group">
+                <span class="relative">
+                    FREELANCE<span class="text-white">•</span>HUB
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-light group-hover:w-full transition-all duration-500"></span>
+                </span>
+            </a>
             
-            <nav class="hidden lg:flex items-center gap-12">
-                <a href="#portfolio" class="text-sm font-light text-gray-400 hover:text-accent transition">Portfolio</a>
-                <a href="#process" class="text-sm font-light text-gray-400 hover:text-accent transition">Process</a>
-                <a href="#team" class="text-sm font-light text-gray-400 hover:text-accent transition">Team</a>
+            <nav class="hidden lg:flex items-center gap-8">
+                <a href="#portfolio" class="text-sm font-light text-gray-300 hover:text-accent transition duration-300 relative group">
+                    Portfolio
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-accent to-transparent group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="#process" class="text-sm font-light text-gray-300 hover:text-accent transition duration-300 relative group">
+                    Process
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-accent to-transparent group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="#testimonials" class="text-sm font-light text-gray-300 hover:text-accent transition duration-300 relative group">
+                    Testimonials
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-accent to-transparent group-hover:w-full transition-all duration-300"></span>
+                </a>
             </nav>
 
-            <button class="px-6 py-2.5 border border-accent text-accent text-sm font-medium hover:bg-accent hover:text-dark transition duration-300">
-                Get Started
+            <button class="px-6 py-2.5 border border-accent text-accent text-sm font-medium relative overflow-hidden group hover:text-dark transition-colors duration-300">
+                <span class="relative z-10">Start Free</span>
+                <div class="absolute inset-0 bg-accent transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
             </button>
         </div>
     </header>
 
     <main class="pt-20">
         <!-- Hero Section -->
-        <section class="min-h-screen bg-dark flex items-center relative overflow-hidden">
-            <!-- Background elements -->
-            <div class="absolute top-20 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 left-1/3 w-80 h-80 bg-accent/5 rounded-full blur-3xl"></div>
-            
+        <section class="min-h-screen bg-dark flex items-center relative overflow-hidden pt-20">
             <div class="max-w-7xl mx-auto px-6 w-full relative z-10 py-20">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <!-- Left content -->
                     <div class="space-y-8">
-                        <div class="space-y-4">
-                            <span class="inline-block text-accent text-sm font-light tracking-widest uppercase">Premium Talent</span>
-                            <h1 class="font-display font-bold text-6xl lg:text-7xl leading-tight">
-                                Hire the <span class="text-accent">Best</span>
+                        <div class="space-y-6 animate-slide-up" style="animation-delay: 0s;">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/30 bg-accent/5">
+                                <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                                <span class="text-accent text-xs font-light tracking-widest uppercase">✦ Elite Network Active</span>
+                            </div>
+                            <h1 class="font-display font-bold text-7xl lg:text-8xl leading-tight text-white">
+                                Hire Elite <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-accent-light to-accent animate-gradient-shift bg-300% bg-size-300">Professionals</span>
                             </h1>
                         </div>
                         
-                        <p class="text-gray-400 text-lg font-light max-w-md leading-relaxed">
-                            Connect with elite professionals. No compromises. Direct collaboration with vetted creators, developers, and designers.
+                        <p class="text-gray-400 text-lg font-light max-w-lg leading-relaxed animate-slide-up" style="animation-delay: 0.1s;">
+                            Direct access to world-class developers, designers, and creators. Vetted talent. Transparent pricing. Zero compromises on quality.
                         </p>
 
-                        <div class="pt-6 flex gap-4">
-                            <button class="px-8 py-3.5 bg-accent text-dark font-semibold hover:bg-accent-light transition">
-                                Browse Talent
+                        <div class="pt-4 flex gap-4 animate-slide-up" style="animation-delay: 0.2s;">
+                            <button class="group px-8 py-4 bg-accent text-dark font-semibold text-base hover:bg-accent-light transition-all duration-300 transform hover:scale-105 hover:shadow-glow-lg relative overflow-hidden">
+                                <span class="relative z-10 flex items-center gap-2">
+                                    Discover Talent
+                                    <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
+                                </span>
                             </button>
-                            <button class="px-8 py-3.5 border border-gray-600 hover:border-accent transition font-light">
-                                Learn More
+                            <button class="px-8 py-4 border border-dark-tertiary text-white hover:border-accent font-light transition-all duration-300 group relative overflow-hidden">
+                                <span class="relative z-10">See Portfolio</span>
+                                <div class="absolute inset-0 bg-accent/10 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
                             </button>
                         </div>
 
-                        <div class="pt-12 flex items-center gap-8 text-sm">
-                            <div>
-                                <div class="font-display text-2xl font-bold text-accent">4,000+</div>
-                                <p class="text-gray-500 text-xs mt-1">Professionals</p>
+                        <!-- Stats -->
+                        <div class="pt-12 flex items-center gap-12 animate-slide-up" style="animation-delay: 0.3s;">
+                            <div class="group cursor-pointer">
+                                <div class="font-display text-4xl font-bold text-accent group-hover:text-accent-light transition duration-300">4K+</div>
+                                <p class="text-gray-500 text-sm mt-2 font-light">Verified Professionals</p>
                             </div>
-                            <div class="w-px h-12 bg-dark-tertiary"></div>
-                            <div>
-                                <div class="font-display text-2xl font-bold text-accent">38K+</div>
-                                <p class="text-gray-500 text-xs mt-1">Projects Completed</p>
+                            <div class="w-px h-16 bg-gradient-to-b from-accent/30 to-transparent"></div>
+                            <div class="group cursor-pointer">
+                                <div class="font-display text-4xl font-bold text-accent group-hover:text-accent-light transition duration-300">38K+</div>
+                                <p class="text-gray-500 text-sm mt-2 font-light">Successful Projects</p>
+                            </div>
+                            <div class="w-px h-16 bg-gradient-to-b from-accent/30 to-transparent"></div>
+                            <div class="group cursor-pointer">
+                                <div class="font-display text-4xl font-bold text-accent group-hover:text-accent-light transition duration-300">$98M</div>
+                                <p class="text-gray-500 text-sm mt-2 font-light">Total Volume</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right visual -->
-                    <div class="hidden lg:block relative h-96">
-                        <div class="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent rounded-3xl border border-dark-tertiary"></div>
-                        <div class="absolute inset-4 bg-dark-tertiary rounded-2xl flex items-center justify-center">
-                            <div class="text-center space-y-4">
-                                <div class="text-4xl font-display font-bold text-accent">✦</div>
-                                <p class="text-gray-500 text-sm">Premium Showcase</p>
+                    <!-- Right Hero Visual -->
+                    <div class="hidden lg:flex items-center justify-center animate-scale-in" style="animation-delay: 0.2s;">
+                        <div class="relative w-full h-96">
+                            <div class="absolute inset-0 bg-gradient-to-br from-accent/30 to-accent/5 rounded-3xl blur-2xl animate-glow"></div>
+                            <div class="absolute inset-0 border border-accent/30 rounded-3xl backdrop-blur-xl"></div>
+                            <div class="absolute inset-6 bg-gradient-to-br from-dark-card to-dark-tertiary rounded-2xl border border-accent/20 flex items-center justify-center overflow-hidden group cursor-pointer">
+                                <div class="text-center space-y-6 transform group-hover:scale-110 transition-transform duration-500">
+                                    <div class="text-6xl animate-float">✦</div>
+                                    <p class="text-gray-400 text-sm font-light">Premium Showcase</p>
+                                    <div class="text-xs text-accent font-light tracking-widest uppercase">Live Network</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -119,92 +204,107 @@
         </section>
 
         <!-- Portfolio Section -->
-        <section id="portfolio" class="bg-dark-secondary py-32 border-t border-dark-tertiary">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="mb-20">
-                    <h2 class="font-display font-bold text-5xl mb-4">Featured Work</h2>
-                    <p class="text-gray-400 font-light text-lg max-w-xl">Exceptional projects from our network of elite professionals</p>
+        <section id="portfolio" class="bg-dark-secondary py-40 border-t border-dark-tertiary/50 relative">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-accent/3 rounded-full blur-3xl"></div>
+            </div>
+            
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="mb-24 animate-slide-up">
+                    <h2 class="font-display font-bold text-6xl mb-6 text-white">Featured <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-light">Projects</span></h2>
+                    <p class="text-gray-400 font-light text-lg max-w-2xl">Showcase of exceptional work from our elite network. Each project represents premium quality and dedicated craftsmanship.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="portfolio-grid">
-                    <!-- Заполняется через JS -->
+                    <!-- Filled by JS -->
                 </div>
             </div>
         </section>
 
         <!-- Categories Section -->
-        <section class="bg-dark py-32 border-t border-dark-tertiary">
+        <section class="bg-dark py-40 border-t border-dark-tertiary/50">
             <div class="max-w-7xl mx-auto px-6">
-                <div class="mb-20">
-                    <h2 class="font-display font-bold text-5xl mb-4">Specializations</h2>
-                    <p class="text-gray-400 font-light text-lg">Curated expertise across all disciplines</p>
+                <div class="mb-24 animate-slide-up">
+                    <h2 class="font-display font-bold text-6xl mb-6 text-white">Expertise <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-light">Areas</span></h2>
+                    <p class="text-gray-400 font-light text-lg">Curated specializations across all disciplines. Find exactly what you need.</p>
                 </div>
 
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" id="categories-grid">
-                    <!-- Заполняется через JS -->
+                    <!-- Filled by JS -->
                 </div>
             </div>
         </section>
 
         <!-- Process Section -->
-        <section id="process" class="bg-dark-secondary py-32 border-t border-dark-tertiary">
+        <section id="process" class="bg-dark-secondary py-40 border-t border-dark-tertiary/50">
             <div class="max-w-7xl mx-auto px-6">
-                <h2 class="font-display font-bold text-5xl mb-20">How It Works</h2>
+                <div class="mb-24 animate-slide-up">
+                    <h2 class="font-display font-bold text-6xl mb-6 text-white">How It <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-light">Works</span></h2>
+                    <p class="text-gray-400 font-light text-lg">Three simple steps to connect with top-tier talent.</p>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div class="space-y-4">
-                        <div class="w-12 h-12 rounded-full border border-accent flex items-center justify-center">
-                            <span class="text-accent font-display font-bold">01</span>
+                    <div class="group animate-slide-up" style="animation-delay: 0s;">
+                        <div class="w-16 h-16 rounded-full border-2 border-accent flex items-center justify-center mb-6 group-hover:bg-accent/20 group-hover:shadow-glow transition-all duration-300">
+                            <span class="text-accent font-display font-bold text-2xl">01</span>
                         </div>
-                        <h3 class="font-display font-bold text-2xl">Discover</h3>
-                        <p class="text-gray-400 font-light leading-relaxed">Browse our curated network of elite professionals. Filter by expertise, style, and experience level.</p>
+                        <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-accent transition duration-300">Discover</h3>
+                        <p class="text-gray-400 font-light leading-relaxed group-hover:text-gray-300 transition duration-300">Browse our curated network of elite professionals. Advanced filters let you find exactly the right expertise and style fit for your project.</p>
                     </div>
 
-                    <div class="space-y-4 md:pt-12">
-                        <div class="w-12 h-12 rounded-full border border-accent flex items-center justify-center">
-                            <span class="text-accent font-display font-bold">02</span>
+                    <div class="group md:pt-12 animate-slide-up" style="animation-delay: 0.1s;">
+                        <div class="w-16 h-16 rounded-full border-2 border-accent flex items-center justify-center mb-6 group-hover:bg-accent/20 group-hover:shadow-glow transition-all duration-300">
+                            <span class="text-accent font-display font-bold text-2xl">02</span>
                         </div>
-                        <h3 class="font-display font-bold text-2xl">Collaborate</h3>
-                        <p class="text-gray-400 font-light leading-relaxed">Secure escrow payments. Real-time communication. Complete transparency throughout the project lifecycle.</p>
+                        <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-accent transition duration-300">Collaborate</h3>
+                        <p class="text-gray-400 font-light leading-relaxed group-hover:text-gray-300 transition duration-300">Secure escrow, real-time chat, and milestone tracking. Every transaction protected. Complete transparency from start to finish.</p>
                     </div>
 
-                    <div class="space-y-4 md:pt-24">
-                        <div class="w-12 h-12 rounded-full border border-accent flex items-center justify-center">
-                            <span class="text-accent font-display font-bold">03</span>
+                    <div class="group md:pt-24 animate-slide-up" style="animation-delay: 0.2s;">
+                        <div class="w-16 h-16 rounded-full border-2 border-accent flex items-center justify-center mb-6 group-hover:bg-accent/20 group-hover:shadow-glow transition-all duration-300">
+                            <span class="text-accent font-display font-bold text-2xl">03</span>
                         </div>
-                        <h3 class="font-display font-bold text-2xl">Deliver</h3>
-                        <p class="text-gray-400 font-light leading-relaxed">Review milestones, approve deliverables, and release payment with confidence.</p>
+                        <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-accent transition duration-300">Deliver</h3>
+                        <p class="text-gray-400 font-light leading-relaxed group-hover:text-gray-300 transition duration-300">Review deliverables, approve milestones, release payment with confidence. Unlimited revisions until perfection.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Testimonials Section -->
-        <section class="bg-dark py-32 border-t border-dark-tertiary">
+        <section id="testimonials" class="bg-dark py-40 border-t border-dark-tertiary/50">
             <div class="max-w-7xl mx-auto px-6">
-                <h2 class="font-display font-bold text-5xl mb-20">What Clients Say</h2>
+                <div class="mb-24 animate-slide-up">
+                    <h2 class="font-display font-bold text-6xl mb-6 text-white">What Clients <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-light">Say</span></h2>
+                    <p class="text-gray-400 font-light text-lg">Real stories from businesses that transformed their projects with our platform.</p>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="testimonials-grid">
-                    <!-- Заполняется через JS -->
+                    <!-- Filled by JS -->
                 </div>
             </div>
         </section>
 
         <!-- CTA Section -->
-        <section class="bg-dark-secondary py-32 border-t border-dark-tertiary">
-            <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-                <h2 class="font-display font-bold text-5xl lg:text-6xl">
-                    Ready to Work with <span class="text-accent">Professionals?</span>
+        <section class="bg-dark-secondary py-40 border-t border-dark-tertiary/50 relative overflow-hidden">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse-glow"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto px-6 text-center relative z-10 animate-slide-up">
+                <h2 class="font-display font-bold text-7xl mb-8">
+                    Ready to Work with <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-light">Elite Talent?</span>
                 </h2>
-                <p class="text-gray-400 text-lg font-light max-w-2xl mx-auto">
-                    Join thousands of businesses that trust our platform for their most important projects.
+                <p class="text-gray-400 text-lg font-light max-w-2xl mx-auto mb-12">
+                    Join thousands of businesses and creators who trust our platform for their most important projects. Premium quality. Direct collaboration. Transparent pricing.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                    <button class="px-10 py-4 bg-accent text-dark font-semibold text-lg hover:bg-accent-light transition">
-                        Get Started Now
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <button class="group px-10 py-4 bg-accent text-dark font-semibold text-lg hover:bg-accent-light transition-all duration-300 transform hover:scale-105 hover:shadow-glow-lg relative overflow-hidden">
+                        <span class="relative z-10">Get Started Free</span>
                     </button>
-                    <button class="px-10 py-4 border border-gray-600 hover:border-accent font-light transition">
-                        Schedule Demo
+                    <button class="px-10 py-4 border-2 border-accent text-accent hover:bg-accent/10 font-medium transition-all duration-300 group relative overflow-hidden">
+                        <span class="relative z-10">Schedule Demo</span>
                     </button>
                 </div>
             </div>
@@ -212,46 +312,46 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark border-t border-dark-tertiary py-16">
+    <footer class="bg-dark border-t border-dark-tertiary/50 py-20">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-                <div>
-                    <h4 class="font-display font-bold text-accent mb-4">Platform</h4>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+                <div class="animate-slide-up" style="animation-delay: 0s;">
+                    <h4 class="font-display font-bold text-accent mb-6 text-sm tracking-widest uppercase">Platform</h4>
                     <ul class="space-y-3 text-sm text-gray-400 font-light">
-                        <li><a href="#" class="hover:text-accent transition">Browse Talent</a></li>
-                        <li><a href="#" class="hover:text-accent transition">How It Works</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Pricing</a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Browse Talent<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">How It Works<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Pricing<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-display font-bold text-accent mb-4">Company</h4>
+                <div class="animate-slide-up" style="animation-delay: 0.1s;">
+                    <h4 class="font-display font-bold text-accent mb-6 text-sm tracking-widest uppercase">Company</h4>
                     <ul class="space-y-3 text-sm text-gray-400 font-light">
-                        <li><a href="#" class="hover:text-accent transition">About</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Blog</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">About<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Blog<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Careers<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-display font-bold text-accent mb-4">Legal</h4>
+                <div class="animate-slide-up" style="animation-delay: 0.2s;">
+                    <h4 class="font-display font-bold text-accent mb-6 text-sm tracking-widest uppercase">Legal</h4>
                     <ul class="space-y-3 text-sm text-gray-400 font-light">
-                        <li><a href="#" class="hover:text-accent transition">Terms</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Privacy</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Security</a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Terms<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Privacy<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Security<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-display font-bold text-accent mb-4">Social</h4>
+                <div class="animate-slide-up" style="animation-delay: 0.3s;">
+                    <h4 class="font-display font-bold text-accent mb-6 text-sm tracking-widest uppercase">Connect</h4>
                     <ul class="space-y-3 text-sm text-gray-400 font-light">
-                        <li><a href="#" class="hover:text-accent transition">Twitter</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Instagram</a></li>
-                        <li><a href="#" class="hover:text-accent transition">LinkedIn</a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Twitter<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">Instagram<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
+                        <li><a href="#" class="hover:text-accent transition duration-300 relative inline-block group">LinkedIn<span class="absolute -bottom-0.5 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></span></a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="pt-8 border-t border-dark-tertiary flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 font-light gap-4">
+            <div class="pt-12 border-t border-dark-tertiary/50 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 font-light gap-6 animate-fade-in">
                 <p>&copy; 2026 FreelanceHub. All rights reserved.</p>
-                <p>Crafted with precision. Built for professionals.</p>
+                <p class="text-center md:text-right">Crafted with precision. Built for professionals.</p>
             </div>
         </div>
     </footer>
