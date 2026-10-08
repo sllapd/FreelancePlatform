@@ -54,7 +54,7 @@ const landingData = {
         { 
             name: 'Svetlana Morozova', 
             role: 'Marketing Director', 
-            text: 'The designer exceeded every expectation. Our brand identity looks premium and exactly captures our vision. Highly recommended!', 
+            text: 'The designer exceeded every expectation. Our brand identity looks premium and exactly captures our vision. Highly recommended.', 
             rating: 5, 
             avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&auto=format' 
         },
@@ -68,27 +68,12 @@ const landingData = {
     ]
 };
 
-// Intersection Observer for scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -80px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Render categories with staggered animations
+    // Render categories
     const catContainer = document.getElementById('categories-grid');
     if (catContainer) {
-        catContainer.innerHTML = landingData.categories.map((cat, index) => `
-            <div class="category-card animate-slide-up" style="animation-delay: ${index * 0.1}s;">
+        catContainer.innerHTML = landingData.categories.map(cat => `
+            <div class="category-card">
                 <span class="icon">${cat.icon}</span>
                 <div class="name">${cat.name}</div>
                 <div class="count">${cat.count} specialists</div>
@@ -96,42 +81,42 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // Render portfolio with enhanced animations
+    // Render portfolio
     const portfolioContainer = document.getElementById('portfolio-grid');
     if (portfolioContainer) {
-        portfolioContainer.innerHTML = landingData.services.map((item, index) => `
-            <div class="portfolio-card animate-scale-in" style="animation-delay: ${index * 0.15}s;">
+        portfolioContainer.innerHTML = landingData.services.map(item => `
+            <div class="portfolio-card">
                 <img src="${item.image}" alt="${item.title}" loading="lazy">
                 <div class="content">
                     <div>
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="${item.seller.avatar}" class="w-10 h-10 rounded-full object-cover ring-2 ring-accent/40" alt="${item.seller.name}">
-                            <div>
-                                <p class="text-sm font-medium text-gray-200">${item.seller.name}</p>
-                                <p class="text-xs text-accent font-light">${item.category}</p>
+                        <div class="seller">
+                            <img src="${item.seller.avatar}" alt="${item.seller.name}" class="seller-img">
+                            <div class="seller-info">
+                                <div class="seller-name">${item.seller.name}</div>
+                                <div class="seller-role">${item.category}</div>
                             </div>
                         </div>
-                        <h3 class="font-display font-bold text-lg text-white mb-4 leading-snug">${item.title}</h3>
+                        <h3>${item.title}</h3>
                     </div>
-                    <div class="flex justify-between items-center pt-4 border-t border-dark-tertiary">
-                        <span class="text-sm text-accent font-semibold">★ ${item.rating} <span class="text-gray-500">(${ item.reviewCount})</span></span>
-                        <span class="font-display font-bold text-accent text-xl">${item.price}</span>
+                    <div class="footer">
+                        <span class="rating">★ ${item.rating} (${item.reviewCount})</span>
+                        <span class="price">${item.price}</span>
                     </div>
                 </div>
             </div>
         `).join('');
     }
 
-    // Render testimonials with stagger effect
+    // Render testimonials
     const testimonialContainer = document.getElementById('testimonials-grid');
     if (testimonialContainer) {
-        testimonialContainer.innerHTML = landingData.testimonials.map((t, index) => `
-            <div class="testimonial-card animate-slide-up" style="animation-delay: ${index * 0.1}s;">
+        testimonialContainer.innerHTML = landingData.testimonials.map(t => `
+            <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="text">${t.text}</p>
+                <p class="text">"${t.text}"</p>
                 <div class="author">
-                    <img src="${t.avatar}" class="avatar" alt="${t.name}">
-                    <div>
+                    <img src="${t.avatar}" alt="${t.name}" class="avatar">
+                    <div class="author-info">
                         <div class="author-name">${t.name}</div>
                         <div class="author-role">${t.role}</div>
                     </div>
@@ -140,130 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // Smooth scroll for navigation links
+    // Smooth scroll for links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                target.scrollIntoView({ behavior: 'smooth' });
             }
-        });
-    });
-
-    // Parallax effect on mouse move
-    let ticking = false;
-    document.addEventListener('mousemove', (e) => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                const floatElements = document.querySelectorAll('[class*="animate-float"]');
-                const x = (e.clientX / window.innerWidth - 0.5) * 20;
-                const y = (e.clientY / window.innerHeight - 0.5) * 20;
-                
-                floatElements.forEach((el, index) => {
-                    const offset = (index + 1) * 0.5;
-                    el.style.transform = `translate(${x * offset}px, ${y * offset}px)`;
-                });
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-
-    // Counter animation for stats
-    const animateCounter = (element, target, duration = 2000) => {
-        let current = 0;
-        const increment = target / (duration / 16);
-        
-        const counter = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                element.textContent = target.toLocaleString();
-                clearInterval(counter);
-            } else {
-                element.textContent = Math.floor(current).toLocaleString();
-            }
-        }, 16);
-    };
-
-    // Lazy loading images
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src || img.src;
-                    img.classList.add('loaded');
-                    imageObserver.unobserve(img);
-                }
-            });
-        }, { rootMargin: '50px' });
-
-        document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
-    }
-
-    // Add scroll spy for navigation highlighting
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (scrollY >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('text-accent');
-            if (link.getAttribute('href').slice(1) === current) {
-                link.classList.add('text-accent');
-            }
-        });
-    });
-
-    // Observe elements for animations
-    document.querySelectorAll('[class*="animate-"]').forEach(el => {
-        observer.observe(el);
-    });
-
-    // Add page load animation
-    document.body.classList.add('loaded');
-    
-    // Trigger animations on elements with animation classes
-    document.querySelectorAll('[class*="animate-"]').forEach((el, index) => {
-        const delay = el.style.animationDelay || '0s';
-        if (!delay) {
-            el.style.animationDelay = `${index * 0.05}s`;
-        }
-    });
-
-    // Button ripple effect
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            const ripple = document.createElement('span');
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.style.position = 'absolute';
-            ripple.style.borderRadius = '50%';
-            ripple.style.background = 'rgba(255, 255, 255, 0.6)';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.animation = 'scale 0.6s ease-out';
-            ripple.style.pointerEvents = 'none';
-            
-            this.style.position = 'relative';
-            this.style.overflow = 'hidden';
-            this.appendChild(ripple);
-            
-            setTimeout(() => ripple.remove(), 600);
         });
     });
 });
