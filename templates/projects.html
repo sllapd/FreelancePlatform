@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мої проєкти та Заявки — FreelanceHub Україна</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <header class="fixed top-0 left-0 right-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+            <a href="index.html" class="font-display text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-accent-dynamic text-white flex items-center justify-center text-base font-bold">F</span>
+                <span>FreelanceHub</span>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-600">
+                <a href="index.html" class="hover:text-slate-900">Головна</a>
+                <a href="catalog.html" class="hover:text-slate-900">Каталог оголошень (54+)</a>
+                <a href="projects.html" class="text-accent-dynamic flex items-center gap-1.5">
+                    <span>Мої проєкти</span>
+                    <span class="projects-count-badge px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px]">0</span>
+                </a>
+                <a href="profile.html" class="hover:text-slate-900">Мій профіль</a>
+            </nav>
+
+            <div class="flex items-center gap-2.5">
+                <button type="button" class="open-brief-modal-btn px-3.5 py-2 rounded-xl bg-accent-dynamic text-white font-bold text-xs shadow-sm">
+                    + Створити нову заявку
+                </button>
+                <div id="header-auth-Slot"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+                <div class="eyebrow">Керування замовленнями</div>
+                <h1 class="font-display text-3xl sm:text-5xl font-extrabold text-slate-900">Ваші заявки та замовлені послуги</h1>
+                <p class="text-sm text-slate-500 mt-1">Тут зберігаються всі створені вами заявки на проєкти та замовлені у спеціалістів послуги.</p>
+            </div>
+            <button type="button" class="open-brief-modal-btn btn btn-primary">+ Додати нову заявку</button>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-6" id="proj-filter-bar">
+            <button type="button" class="filter-pill active" data-filter="all">Усі замовлення</button>
+            <button type="button" class="filter-pill" data-filter="Активна">🟢 Активні</button>
+            <button type="button" class="filter-pill" data-filter="В роботі">🔵 В роботі</button>
+            <button type="button" class="filter-pill" data-filter="Завершена">✅ Завершені</button>
+        </div>
+
+        <div class="space-y-4" id="projects-board-list"></div>
+    </main>
+
+    <script>
+        (function loadCoreScript() {
+            const paths = ['script.js', '../script.js', '../static/script.js'];
+            let idx = 0;
+            function tryNext() {
+                if (idx >= paths.length) return;
+                const s = document.createElement('script');
+                s.src = paths[idx++];
+                s.onload = initProjectsPage;
+                s.onerror = tryNext;
+                document.body.appendChild(s);
+            }
+            tryNext();
+        })();
+
+        let currentProjFilter = 'all';
+
+        window.renderProjectsPage = function() {
+            const listEl = document.getElementById('projects-board-list');
+            if (!listEl) return;
+
+            let projects = getProjects();
+            if (currentProjFilter !== 'all') {
+                projects = projects.filter(p => p.status === currentProjFilter);
+            }
+
+            if (projects.length === 0) {
+                listEl.innerHTML = `
+                    <div class="p-12 text-center bg-white rounded-3xl border border-slate-200 space-y-3">
+                        <div class="font-display text-xl font-bold text-slate-900">У вас поки немає створених заявок або замовлень</div>
+                        <p class="text-xs text-slate-500 max-w-md mx-auto">Натисніть кнопку «+ Додати нову заявку» або замовте будь-яку готову послугу в каталозі.</p>
+                        <button type="button" class="btn btn-primary" onclick="openBriefModal()">+ Створити першу заявку</button>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = projects.map(p => {
+                const statusColors = {
+                    'Активна': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    'В роботі': 'bg-blue-50 text-blue-700 border-blue-200',
+                    'Завершена': 'bg-slate-100 text-slate-600 border-slate-300'
+                };
+                const badgeClass = statusColors[p.status] || statusColors['Активна'];
+
+                return `
+                    <article class="project-card p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                        <div class="space-y-2.5 flex-1">
+                            <div class="flex flex-wrap items-center gap-2.5">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}">${p.status}</span>
+                                <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">${p.category}</span>
+                                ${p.sellerName ? `<span class="px-3 py-1 rounded-full bg-blue-50 text-accent-dynamic text-xs font-bold">Виконавець: ${p.sellerName}</span>` : `<span class="px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold">Індивідуальна заявка</span>`}
+                                <span class="text-xs text-slate-400">Створено: ${p.createdAt}</span>
+                            </div>
+
+                            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-slate-900">${p.title}</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed max-w-3xl">${p.notes}</p>
+
+                            <div class="flex flex-wrap items-center gap-4 pt-1 text-xs text-slate-500 font-semibold">
+                                <span>Замовник: <strong class="text-slate-800">${p.author}</strong> (${p.email})</span>
+                                <span>•</span>
+                                <span>Термін: <strong class="text-slate-800">${p.deadline || '3 дні'}</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 border-t lg:border-t-0 pt-4 lg:pt-0 border-slate-100 min-w-[210px]">
+                            <div class="text-left lg:text-right">
+                                <div class="text-[11px] font-bold uppercase text-slate-400">Бюджет проєкту</div>
+                                <div class="font-display text-3xl font-extrabold text-accent-dynamic">${p.budget}</div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                                <select class="status-change-select bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-bold text-slate-700 outline-none cursor-pointer" data-id="${p.id}">
+                                    <option value="Активна" ${p.status === 'Активна' ? 'selected' : ''}>🟢 Активна</option>
+                                    <option value="В роботі" ${p.status === 'В роботі' ? 'selected' : ''}>🔵 В роботі</option>
+                                    <option value="Завершена" ${p.status === 'Завершена' ? 'selected' : ''}>✅ Завершена</option>
+                                </select>
+
+                                <button type="button" class="edit-proj-btn px-3 py-2 rounded-xl border border-slate-200 bg-white hover:border-blue-500 text-xs font-bold text-slate-700" data-id="${p.id}">
+                                    ✏️ Змінити
+                                </button>
+                                <button type="button" class="delete-proj-btn px-3 py-2 rounded-xl btn-danger text-xs font-bold" data-id="${p.id}">
+                                    🗑 Видалити
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        };
+
+        function initProjectsPage() {
+            window.renderProjectsPage();
+
+            document.getElementById('proj-filter-bar').addEventListener('click', (e) => {
+                const btn = e.target.closest('.filter-pill');
+                if (!btn) return;
+                document.querySelectorAll('#proj-filter-bar .filter-pill').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentProjFilter = btn.getAttribute('data-filter');
+                window.renderProjectsPage();
+            });
+
+            document.getElementById('projects-board-list').addEventListener('click', (e) => {
+                const editBtn = e.target.closest('.edit-proj-btn');
+                if (editBtn) {
+                    const id = editBtn.getAttribute('data-id');
+                    const proj = getProjects().find(p => p.id === id);
+                    if (proj) openBriefModal({ editProject: proj });
+                    return;
+                }
+
+                const delBtn = e.target.closest('.delete-proj-btn');
+                if (delBtn) {
+                    const id = delBtn.getAttribute('data-id');
+                    const updated = getProjects().filter(p => p.id !== id);
+                    saveProjects(updated);
+                    showToast('Замовлення видалено', 'Запис було видалено зі списку.');
+                }
+            });
+
+            document.getElementById('projects-board-list').addEventListener('change', (e) => {
+                const sel = e.target.closest('.status-change-select');
+                if (!sel) return;
+                const id = sel.getAttribute('data-id');
+                const newStatus = sel.value;
+                const list = getProjects();
+                const idx = list.findIndex(p => p.id === id);
+                if (idx >= 0) {
+                    list[idx].status = newStatus;
+                    saveProjects(list);
+                    showToast('Статус змінено', `Новий статус: ${newStatus}`);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

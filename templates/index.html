@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreelanceHub Україна — Доступні ІТ та креативні спеціалісти</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <header class="fixed top-0 left-0 right-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+            <a href="index.html" class="font-display text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-accent-dynamic text-white flex items-center justify-center text-base font-bold">F</span>
+                <span>FreelanceHub</span>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-600">
+                <a href="index.html" class="text-accent-dynamic">Головна</a>
+                <a href="catalog.html" class="hover:text-slate-900 transition-colors flex items-center gap-1.5">
+                    <span>Каталог оголошень</span>
+                    <span class="px-2 py-0.5 rounded-full bg-blue-50 text-accent-dynamic text-[10px]">54+</span>
+                </a>
+                <a href="projects.html" class="hover:text-slate-900 transition-colors flex items-center gap-1.5">
+                    <span>Мої проєкти</span>
+                    <span class="projects-count-badge px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px]">0</span>
+                </a>
+                <a href="profile.html" class="hover:text-slate-900 transition-colors">Мій профіль</a>
+            </nav>
+
+            <div class="flex items-center gap-2.5">
+                <button id="open-saved-btn" type="button" class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 flex items-center gap-1.5 shadow-sm">
+                    <span>♥</span>
+                    <span class="saved-count-badge bg-accent-dynamic text-white px-1.5 py-0.2 rounded-full text-[10px]">0</span>
+                </button>
+
+                <button type="button" class="open-brief-modal-btn hidden sm:inline-flex px-3.5 py-2 rounded-xl bg-accent-dynamic text-white font-bold text-xs shadow-sm">
+                    + Створити заявку
+                </button>
+
+                <div id="header-auth-Slot"></div>
+
+                <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 rounded-xl border border-slate-200 bg-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white px-6 py-4 space-y-3 shadow-lg text-sm font-bold">
+            <a href="index.html" class="block py-1 text-accent-dynamic">Головна</a>
+            <a href="catalog.html" class="block py-1">Каталог оголошень (54+)</a>
+            <a href="projects.html" class="block py-1">Мої проєкти та Заявки</a>
+            <a href="profile.html" class="block py-1">Мій профіль</a>
+            <a href="auth.html" class="block py-1">Вхід / Реєстрація</a>
+            <button type="button" class="open-brief-modal-btn w-full py-2.5 rounded-xl bg-accent-dynamic text-white text-xs font-bold">+ Опублікувати заявку</button>
+        </div>
+    </header>
+
+    <main class="pt-16">
+        <section class="hero py-16 md:py-24 border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 grid lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 rounded-full border border-blue-200 bg-blue-50 text-xs font-bold text-accent-dynamic">
+                        <span>🇺🇦 Перевірені фрілансери України • Реальні ціни від $15</span>
+                    </div>
+                    <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] text-slate-900">
+                        Замовляйте розробку, дизайн та ШІ за чесними цінами
+                    </h1>
+                    <p class="mt-5 max-w-xl text-base text-slate-600 leading-relaxed">
+                        Понад 54 готових пакетів послуг із фіксованою вартістю: від швидкої верстки лендінгу за $65 і Telegram-ботів у n8n за $50 до повноцінних магазинів та брендбуків.
+                    </p>
+                    <div class="mt-7 flex flex-wrap gap-3.5">
+                        <a href="catalog.html" class="btn btn-primary">
+                            <span>Дивитися всі 54+ оголошення</span>
+                        </a>
+                        <button type="button" class="open-brief-modal-btn btn btn-secondary">
+                            Розмістити свою заявку
+                        </button>
+                    </div>
+
+                    <div class="mt-10 grid grid-cols-3 gap-4 max-w-lg">
+                        <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                            <div class="font-display text-2xl font-extrabold text-accent-dynamic">54+</div>
+                            <div class="text-xs text-slate-500 font-semibold">Готових послуг</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                            <div class="font-display text-2xl font-extrabold text-accent-dynamic">$15–$290</div>
+                            <div class="text-xs text-slate-500 font-semibold">Адекватний прайс</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                            <div class="font-display text-2xl font-extrabold text-accent-dynamic">100%</div>
+                            <div class="text-xs text-slate-500 font-semibold">Захист Escrow</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-xl space-y-5">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase text-accent-dynamic">Навігація платформою</span>
+                                <h2 class="font-display text-lg font-extrabold text-slate-900">Розділи сайту</h2>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold">Активно</span>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <a href="catalog.html" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200 flex items-center justify-between transition-colors">
+                                <div>
+                                    <div class="font-bold text-slate-900 text-sm">📚 Повний каталог (54+ оголошення)</div>
+                                    <div class="text-slate-500 mt-0.5">Фільтри за ціною, категоріями та додавання власних послуг</div>
+                                </div>
+                                <span class="font-bold text-accent-dynamic text-base">→</span>
+                            </a>
+                            <a href="projects.html" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200 flex items-center justify-between transition-colors">
+                                <div>
+                                    <div class="font-bold text-slate-900 text-sm">📋 Мої заявки на проєкти</div>
+                                    <div class="text-slate-500 mt-0.5">Переглядайте, редагуйте або видаляйте створені вами заявки</div>
+                                </div>
+                                <span class="font-bold text-accent-dynamic text-base">→</span>
+                            </a>
+                            <a href="profile.html" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200 flex items-center justify-between transition-colors">
+                                <div>
+                                    <div class="font-bold text-slate-900 text-sm">👤 Мій профіль та Мої послуги</div>
+                                    <div class="text-slate-500 mt-0.5">Керування виставленими вами послугами та активними замовленнями</div>
+                                </div>
+                                <span class="font-bold text-accent-dynamic text-base">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <div class="eyebrow">Топ пропозицій</div>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900">Популярні послуги тижня</h2>
+                </div>
+                <a href="catalog.html" class="btn btn-secondary">Відкрити всі 54+ оголошення →</a>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-8" id="home-cat-filters">
+                <button type="button" class="filter-pill active" data-cat="Усі">Усі напрями</button>
+                <button type="button" class="filter-pill" data-cat="Розробка">Розробка</button>
+                <button type="button" class="filter-pill" data-cat="Дизайн">Дизайн</button>
+                <button type="button" class="filter-pill" data-cat="Маркетинг">Маркетинг</button>
+                <button type="button" class="filter-pill" data-cat="ШІ та Дані">ШІ та Дані</button>
+                <button type="button" class="filter-pill" data-cat="Стратегія">Стратегія і Відео</button>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="home-portfolio-grid"></div>
+
+            <div class="mt-10 text-center">
+                <a href="catalog.html" class="btn btn-primary px-8">Переглянути повний каталог (ще 42+ оголошення)</a>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white border-y border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8">
+                <div class="mb-10">
+                    <div class="eyebrow">Прозорий алгоритм</div>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900">Як працює платформа</h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6 mb-8" id="home-process-cards">
+                    <div class="process-card active p-6 cursor-pointer" data-step="0">
+                        <span class="text-xs font-bold text-accent-dynamic uppercase">01 / Крок перший</span>
+                        <h3 class="font-display text-xl font-bold mt-2 mb-2">Вибір послуги або заявка</h3>
+                        <p class="text-xs text-slate-600">Обирайте серед 54+ пакетів за фіксованою ціною або розміщуйте власне ТЗ.</p>
+                    </div>
+                    <div class="process-card p-6 cursor-pointer" data-step="1">
+                        <span class="text-xs font-bold text-accent-dynamic uppercase">02 / Крок другий</span>
+                        <h3 class="font-display text-xl font-bold mt-2 mb-2">Керування у кабінеті</h3>
+                        <p class="text-xs text-slate-600">Редагуйте деталі заявки, змінюйте бюджет або статус у розділі «Мої проєкти».</p>
+                    </div>
+                    <div class="process-card p-6 cursor-pointer" data-step="2">
+                        <span class="text-xs font-bold text-accent-dynamic uppercase">03 / Крок третій</span>
+                        <h3 class="font-display text-xl font-bold mt-2 mb-2">Безпечна оплата Escrow</h3>
+                        <p class="text-xs text-slate-600">Гроші перераховуються спеціалісту лише після перевірки та схвалення вами.</p>
+                    </div>
+                </div>
+                <div id="home-process-detail" class="rounded-3xl border border-blue-200 bg-blue-50/60 p-6 sm:p-8"></div>
+            </div>
+        </section>
+
+        <section id="estimator" class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="grid lg:grid-cols-12 gap-10 items-start">
+                <div class="lg:col-span-5">
+                    <div class="eyebrow">Доступні тарифи</div>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">Калькулятор реальної вартості</h2>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        Розрахуйте чесний бюджет вашого завдання в доларах та гривнях і одразу збережіть його у свої заявки.
+                    </p>
+                    <div class="space-y-3 text-xs font-semibold text-slate-700">
+                        <div class="flex items-center gap-2.5"><span class="w-5 h-5 rounded-full bg-accent-dynamic text-white flex items-center justify-center">✓</span> Мінімальне замовлення від $15 (≈ 620 грн)</div>
+                        <div class="flex items-center gap-2.5"><span class="w-5 h-5 rounded-full bg-accent-dynamic text-white flex items-center justify-center">✓</span> Заявка одразу зберігається у «Моїх проєктах»</div>
+                        <div class="flex items-center gap-2.5"><span class="w-5 h-5 rounded-full bg-accent-dynamic text-white flex items-center justify-center">✓</span> Безкоштовні правки та захист угоди</div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-md space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-2.5">1. Оберіть тип завдання</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="calc-discipline-group">
+                            <button type="button" data-base="60" data-cat="Розробка" class="calc-pill active">Сайт / Бот ($60)</button>
+                            <button type="button" data-base="40" data-cat="Дизайн" class="calc-pill">Дизайн Figma ($40)</button>
+                            <button type="button" data-base="45" data-cat="Маркетинг" class="calc-pill">Реклама / SEO ($45)</button>
+                            <button type="button" data-base="55" data-cat="ШІ та Дані" class="calc-pill">ШІ та n8n ($55)</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label for="calc-days" class="text-xs font-bold uppercase text-slate-500">2. Обсяг роботи (Кількість днів)</label>
+                            <span id="calc-days-label" class="font-display text-xl font-extrabold text-accent-dynamic">3 дні</span>
+                        </div>
+                        <input id="calc-days" type="range" min="1" max="14" value="3">
+                        <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                            <span>1 день (Дрібне завдання)</span>
+                            <span>5 днів (Стандартний проєкт)</span>
+                            <span>14 днів (Комплексний запуск)</span>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <label class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 cursor-pointer bg-slate-50">
+                            <div>
+                                <div class="text-xs font-bold text-slate-900">Терміновий старт сьогодні</div>
+                                <div class="text-[11px] text-slate-500">+$15 до бюджету</div>
+                            </div>
+                            <input type="checkbox" id="addon-rush" class="w-4 h-4 accent-blue-600">
+                        </label>
+                        <label class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 cursor-pointer bg-slate-50">
+                            <div>
+                                <div class="text-xs font-bold text-slate-900">Підтримка 14 днів</div>
+                                <div class="text-[11px] text-slate-500">+$20 до бюджету</div>
+                            </div>
+                            <input type="checkbox" id="addon-support" class="w-4 h-4 accent-blue-600">
+                        </label>
+                    </div>
+
+                    <div class="pt-5 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <div class="text-xs font-bold uppercase text-slate-400">Розрахований бюджет</div>
+                            <div class="flex items-baseline gap-2.5 mt-0.5">
+                                <span id="calc-total-usd" class="font-display text-4xl font-extrabold text-accent-dynamic">$85</span>
+                                <span id="calc-total-uah" class="text-xs font-bold text-slate-500">≈ 3 530 ₴</span>
+                            </div>
+                        </div>
+                        <button type="button" id="calc-submit-btn" class="btn btn-primary">Створити заявку з цим бюджетом</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8">
+                <div class="mb-10">
+                    <div class="eyebrow">Відгуки клієнтів</div>
+                    <h2 class="font-display text-3xl font-extrabold text-slate-900">Що кажуть замовники</h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6" id="home-testimonials"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-10 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="font-bold text-white">FreelanceHub Україна © 2026</div>
+            <div class="flex flex-wrap gap-5">
+                <a href="catalog.html" class="hover:text-white">Каталог (54+)</a>
+                <a href="projects.html" class="hover:text-white">Мої проєкти</a>
+                <a href="profile.html" class="hover:text-white">Профіль</a>
+                <a href="auth.html" class="hover:text-white">Вхід / Реєстрація</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function loadCoreScript() {
+            const paths = ['script.js', '../script.js', '../static/script.js'];
+            let idx = 0;
+            function tryNext() {
+                if (idx >= paths.length) return;
+                const s = document.createElement('script');
+                s.src = paths[idx++];
+                s.onload = initHomePage;
+                s.onerror = tryNext;
+                document.body.appendChild(s);
+            }
+            tryNext();
+        })();
+
+        function initHomePage() {
+            let homeCat = 'Усі';
+            let calcBase = 60;
+            let calcCat = 'Розробка';
+            let activeStep = 0;
+
+            window.refreshServiceGrids = function() {
+                const all = getAllServices();
+                const filtered = homeCat === 'Усі' ? all.slice(0, 12) : all.filter(s => s.cat === homeCat).slice(0, 12);
+                document.getElementById('home-portfolio-grid').innerHTML = filtered.map(createServiceCardHTML).join('');
+            };
+            window.refreshServiceGrids();
+
+            document.getElementById('home-cat-filters').addEventListener('click', (e) => {
+                const btn = e.target.closest('.filter-pill');
+                if (!btn) return;
+                document.querySelectorAll('#home-cat-filters .filter-pill').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                homeCat = btn.getAttribute('data-cat');
+                window.refreshServiceGrids();
+            });
+
+            function renderStep() {
+                const s = processSteps[activeStep];
+                document.getElementById('home-process-detail').innerHTML = `
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div class="space-y-2 max-w-2xl">
+                            <div class="text-xs font-bold text-accent-dynamic uppercase">${s.subtitle}</div>
+                            <h4 class="font-display text-2xl font-extrabold text-slate-900">${s.title}</h4>
+                            <p class="text-xs sm:text-sm text-slate-600">${s.description}</p>
+                        </div>
+                        <a href="${s.ctaLink}" class="btn btn-primary whitespace-nowrap" id="step-action-link">${s.ctaText}</a>
+                    </div>
+                `;
+                const link = document.getElementById('step-action-link');
+                if (s.ctaLink === '#open-brief') {
+                    link.addEventListener('click', (ev) => { ev.preventDefault(); openBriefModal(); });
+                }
+            }
+            renderStep();
+
+            document.getElementById('home-process-cards').addEventListener('click', (e) => {
+                const card = e.target.closest('.process-card');
+                if (!card) return;
+                activeStep = parseInt(card.getAttribute('data-step'), 10);
+                document.querySelectorAll('#home-process-cards .process-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                renderStep();
+            });
+
+            function updateHomeCalc() {
+                const days = parseInt(document.getElementById('calc-days').value, 10) || 3;
+                const rush = document.getElementById('addon-rush').checked;
+                const sup = document.getElementById('addon-support').checked;
+                document.getElementById('calc-days-label').textContent = days === 1 ? '1 день' : (days < 5 ? `${days} дні` : `${days} днів`);
+
+                let total = Math.round(calcBase * (0.6 + days * 0.14));
+                if (rush) total += 15;
+                if (sup) total += 20;
+
+                const usd = `$${total}`;
+                const uah = `≈ ${Math.round(total * UAH_RATE).toLocaleString('uk-UA')} ₴`;
+                document.getElementById('calc-total-usd').textContent = usd;
+                document.getElementById('calc-total-uah').textContent = uah;
+                return { usd, daysText: document.getElementById('calc-days-label').textContent };
+            }
+            updateHomeCalc();
+
+            document.getElementById('calc-discipline-group').addEventListener('click', (e) => {
+                const btn = e.target.closest('.calc-pill');
+                if (!btn) return;
+                document.querySelectorAll('#calc-discipline-group .calc-pill').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                calcBase = parseInt(btn.getAttribute('data-base'), 10);
+                calcCat = btn.getAttribute('data-cat');
+                updateHomeCalc();
+            });
+            document.getElementById('calc-days').addEventListener('input', updateHomeCalc);
+            document.getElementById('addon-rush').addEventListener('change', updateHomeCalc);
+            document.getElementById('addon-support').addEventListener('change', updateHomeCalc);
+
+            document.getElementById('calc-submit-btn').addEventListener('click', () => {
+                const res = updateHomeCalc();
+                openBriefModal({ budget: res.usd, category: calcCat, deadline: res.daysText });
+            });
+
+            document.getElementById('home-testimonials').innerHTML = defaultTestimonials.map(t => `
+                <article class="testimonial-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-amber-500 font-bold text-sm">★★★★★</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-accent-dynamic text-[11px] font-bold">${t.metric}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">«${t.text}»</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-4 mt-4 border-t border-slate-100">
+                        <img src="${t.avatar}" class="w-10 h-10 rounded-full object-cover bg-slate-200">
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">${t.name}</div>
+                            <div class="text-[11px] text-slate-500">${t.role}</div>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід та Реєстрація — FreelanceHub Україна</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col justify-between">
+
+    <header class="border-b border-slate-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+            <a href="index.html" class="font-display text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-accent-dynamic text-white flex items-center justify-center text-base font-bold">F</span>
+                <span>FreelanceHub</span>
+            </a>
+            <a href="index.html" class="text-xs font-bold text-slate-600 hover:text-slate-900">← Повернутися на головну</a>
+        </div>
+    </header>
+
+    <main class="py-12 px-4 flex-1 flex items-center justify-center">
+        <div class="w-full max-w-md bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xl">
+            <div class="text-center mb-6">
+                <div class="eyebrow">Особистий акаунт</div>
+                <h1 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">Вхід у FreelanceHub</h1>
+                <p class="text-xs text-slate-500 mt-1">Увійдіть у свій акаунт або зареєструйтеся</p>
+            </div>
+
+            <div id="file-protocol-warning" class="hidden mb-5 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-2">
+                <div class="font-bold text-amber-800">⚠️ Сторінку відкрито як локальний файл (file://)</div>
+                <p>Google OAuth 2.0 блокує авторизацію з <code>file://</code>. Щоб увійти через Google:</p>
+                <ol class="list-decimal pl-4 space-y-1">
+                    <li>Запустіть <strong>Live Server</strong> у VS Code або виконайте в терміналі: <code>python -m http.server 5500</code></li>
+                    <li>Відкрийте у браузері: <a href="http://localhost:5500/templates/auth.html" class="font-bold text-blue-600 underline">http://localhost:5500/templates/auth.html</a></li>
+                </ol>
+            </div>
+
+            <div class="space-y-2 mb-5">
+                <button type="button" id="real-google-oauth-btn" class="w-full py-3 px-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-bold text-xs text-slate-800 flex items-center justify-center gap-3 shadow-sm transition-all">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24">
+                        <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
+                        <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
+                        <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.8z"/>
+                        <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.4 7.4 24 12 24z"/>
+                    </svg>
+                    <span>Увійти через Google (OAuth 2.0)</span>
+                </button>
+                <div class="flex items-center justify-between text-[11px]">
+                    <span id="origin-status-badge" class="text-slate-400"></span>
+                    <button type="button" id="open-google-config-btn" class="font-semibold text-slate-500 hover:text-blue-600 underline">
+                        ⚙️ Налаштувати Client ID та URI
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative flex py-2 items-center mb-5">
+                <div class="flex-grow border-t border-slate-200"></div>
+                <span class="flex-shrink mx-3 text-[11px] font-bold uppercase text-slate-400">або за Email та паролем</span>
+                <div class="flex-grow border-t border-slate-200"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl mb-5 text-xs font-bold">
+                <button type="button" id="tab-login" class="py-2 rounded-lg bg-white text-slate-900 shadow-sm">Вхід в акаунт</button>
+                <button type="button" id="tab-register" class="py-2 rounded-lg text-slate-500">Нова реєстрація</button>
+            </div>
+
+            <div id="auth-error-box" class="hidden mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-xs font-semibold text-red-600"></div>
+
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Ваш Email *</label>
+                    <input type="email" required id="login-email" placeholder="name@example.com" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Пароль *</label>
+                    <input type="password" required id="login-pass" placeholder="Введіть ваш пароль" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none">
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Увійти</button>
+            </form>
+
+            <form id="register-form" class="hidden space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Ваше Ім'я та Прізвище *</label>
+                    <input type="text" required id="reg-name" placeholder="Введіть ваше ім'я" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1">Роль</label>
+                        <select id="reg-role" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none">
+                            <option value="Замовник і Фрілансер">Універсальний</option>
+                            <option value="Замовник">Замовник</option>
+                            <option value="Фрілансер">Фрілансер</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1">Місто</label>
+                        <input type="text" required id="reg-city" placeholder="Ваше місто" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Email *</label>
+                    <input type="email" required id="reg-email" placeholder="name@example.com" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Створіть пароль *</label>
+                    <input type="password" required minlength="6" id="reg-pass" placeholder="Мінімум 6 символів" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none">
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Зареєструвати акаунт</button>
+            </form>
+        </div>
+    </main>
+
+    <div id="google-config-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-display text-lg font-extrabold text-slate-900">Налаштування Google OAuth 2.0</h3>
+                <button type="button" id="close-google-config" class="text-slate-400 hover:text-slate-800 text-xl">&times;</button>
+            </div>
+            <div class="text-xs text-slate-600 space-y-3 leading-relaxed">
+                <div class="p-3 rounded-xl bg-blue-50 border border-blue-200 text-slate-800 space-y-1.5">
+                    <div class="font-bold text-blue-800">Параметри для Google Cloud Console (OAuth client ID):</div>
+                    <div>1. <strong>Authorized JavaScript origins:</strong><br>
+                        <code id="copy-origin-box" class="inline-block mt-0.5 bg-white px-2 py-1 rounded border border-blue-200 font-bold text-blue-700 select-all">http://localhost:5500</code>
+                    </div>
+                    <div>2. <strong>Authorized redirect URIs:</strong><br>
+                        <code id="copy-redirect-box" class="inline-block mt-0.5 bg-white px-2 py-1 rounded border border-blue-200 font-bold text-blue-700 select-all">http://localhost:5500/templates/auth.html</code>
+                    </div>
+                </div>
+            </div>
+            <form id="save-client-id-form" class="space-y-3 pt-2 border-t border-slate-100">
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Ваш Google Client ID:</label>
+                    <input type="text" required id="google-client-id-input" placeholder="1234567890-abcdefg.apps.googleusercontent.com" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-xs outline-none">
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button type="submit" class="btn btn-primary text-xs w-full">Зберегти Client ID та увійти через Google</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="py-6 text-center text-xs text-slate-400">
+        © 2026 FreelanceHub Україна
+    </footer>
+
+    <script>
+        if (window.location.hostname === '127.0.0.1') {
+            window.location.hostname = 'localhost';
+        }
+
+        (function loadCoreScript() {
+            const paths = ['script.js', '../script.js', '../static/script.js'];
+            let idx = 0;
+            function tryNext() {
+                if (idx >= paths.length) return;
+                const s = document.createElement('script');
+                s.src = paths[idx++];
+                s.onload = initAuthPage;
+                s.onerror = tryNext;
+                document.body.appendChild(s);
+            }
+            tryNext();
+        })();
+
+        function initAuthPage() {
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+            const formLogin = document.getElementById('login-form');
+            const formReg = document.getElementById('register-form');
+            const errBox = document.getElementById('auth-error-box');
+
+            const isFileProtocol = window.location.protocol === 'file:';
+            if (isFileProtocol) {
+                document.getElementById('file-protocol-warning').classList.remove('hidden');
+                document.getElementById('origin-status-badge').textContent = '⚠️ Відкрийте через localhost';
+            } else {
+                const cleanUrl = window.location.href.split('#')[0].split('?')[0];
+                document.getElementById('copy-origin-box').textContent = window.location.origin;
+                document.getElementById('copy-redirect-box').textContent = cleanUrl;
+                document.getElementById('origin-status-badge').textContent = `🟢 Сервер: ${window.location.origin}`;
+            }
+
+            function showError(msg) {
+                errBox.textContent = msg;
+                errBox.classList.remove('hidden');
+            }
+            function clearError() {
+                errBox.classList.add('hidden');
+            }
+
+            tabLogin.addEventListener('click', () => {
+                clearError();
+                tabLogin.className = 'py-2 rounded-lg bg-white text-slate-900 shadow-sm';
+                tabReg.className = 'py-2 rounded-lg text-slate-500';
+                formLogin.classList.remove('hidden');
+                formReg.classList.add('hidden');
+            });
+
+            tabReg.addEventListener('click', () => {
+                clearError();
+                tabReg.className = 'py-2 rounded-lg bg-white text-slate-900 shadow-sm';
+                tabLogin.className = 'py-2 rounded-lg text-slate-500';
+                formReg.classList.remove('hidden');
+                formLogin.classList.add('hidden');
+            });
+
+            formReg.addEventListener('submit', (e) => {
+                e.preventDefault();
+                clearError();
+                const name = document.getElementById('reg-name').value.trim();
+                const role = document.getElementById('reg-role').value;
+                const city = document.getElementById('reg-city').value.trim();
+                const email = document.getElementById('reg-email').value.trim().toLowerCase();
+                const password = document.getElementById('reg-pass').value;
+
+                const users = getUsersList();
+                if (users.some(u => u.email.toLowerCase() === email)) {
+                    showError('Користувач з таким Email вже зареєстрований. Перейдіть на вкладку «Вхід в акаунт».');
+                    return;
+                }
+
+                const newUser = {
+                    name,
+                    email,
+                    password,
+                    role,
+                    city,
+                    handle: '@' + email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '_'),
+                    rate: 15,
+                    title: `${role} на FreelanceHub`,
+                    bio: '',
+                    skills: '',
+                    avatar: DEFAULT_AVATAR,
+                    cover: 'cover-ocean',
+                    provider: 'email'
+                };
+                setCurrentUser(newUser);
+                showToast(`Акаунт створено, ${name}!`, 'Перехід у ваш профіль...');
+                setTimeout(() => window.location.href = 'profile.html', 800);
+            });
+
+            formLogin.addEventListener('submit', (e) => {
+                e.preventDefault();
+                clearError();
+                const email = document.getElementById('login-email').value.trim().toLowerCase();
+                const password = document.getElementById('login-pass').value;
+
+                const existing = getUsersList().find(u => u.email.toLowerCase() === email);
+                if (!existing) {
+                    showError('Акаунт із таким Email не знайдено. Спочатку зареєструйтеся на вкладці «Нова реєстрація».');
+                    return;
+                }
+                if (existing.password && existing.password !== password) {
+                    showError('Невірний пароль.');
+                    return;
+                }
+
+                setCurrentUser(existing);
+                showToast(`З поверненням, ${existing.name}!`, 'Перехід у ваш профіль...');
+                setTimeout(() => window.location.href = 'profile.html', 800);
+            });
+
+            if (window.location.hash && window.location.hash.includes('access_token=')) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                const accessToken = params.get('access_token');
+                if (accessToken) {
+                    fetchGoogleUserProfile(accessToken);
+                }
+            }
+
+            async function fetchGoogleUserProfile(accessToken) {
+                try {
+                    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                        headers: { Authorization: `Bearer ${accessToken}` }
+                    });
+                    if (!res.ok) throw new Error('Не вдалося отримати дані профілю Google');
+                    const data = await res.json();
+
+                    const googleUser = {
+                        name: data.name || data.given_name || 'Користувач Google',
+                        email: data.email,
+                        role: 'Замовник і Фрілансер',
+                        city: 'Україна',
+                        handle: '@' + (data.email ? data.email.split('@')[0] : 'google_user'),
+                        rate: 15,
+                        title: 'Підтверджений акаунт Google',
+                        bio: '',
+                        skills: '',
+                        avatar: data.picture || DEFAULT_AVATAR,
+                        cover: 'cover-ocean',
+                        provider: 'google'
+                    };
+                    setCurrentUser(googleUser);
+                    showToast('Успішний вхід через Google!', `Підтверджено: ${data.email}`);
+                    setTimeout(() => window.location.href = 'profile.html', 800);
+                } catch (err) {
+                    showError('Помилка авторизації Google: ' + err.message);
+                }
+            }
+
+            function startRealGoogleOAuth() {
+                clearError();
+                if (window.location.protocol === 'file:') {
+                    showError('Відкрийте сайт через локальний сервер http://localhost:5500/templates/auth.html');
+                    document.getElementById('file-protocol-warning').classList.remove('hidden');
+                    return;
+                }
+
+                const clientId = getGoogleClientId();
+                if (!clientId) {
+                    document.getElementById('google-config-modal').classList.remove('hidden');
+                    document.getElementById('google-config-modal').classList.add('flex');
+                    return;
+                }
+
+                if (window.google && window.google.accounts && window.google.accounts.oauth2) {
+                    const tokenClient = google.accounts.oauth2.initTokenClient({
+                        client_id: clientId,
+                        scope: 'openid email profile',
+                        prompt: 'select_account',
+                        callback: (tokenResponse) => {
+                            if (tokenResponse && tokenResponse.access_token) {
+                                fetchGoogleUserProfile(tokenResponse.access_token);
+                            }
+                        }
+                    });
+                    tokenClient.requestAccessToken();
+                } else {
+                    const redirectUri = window.location.href.split('#')[0].split('?')[0];
+                    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent('openid email profile')}&prompt=select_account`;
+                    window.location.href = authUrl;
+                }
+            }
+
+            document.getElementById('real-google-oauth-btn').addEventListener('click', startRealGoogleOAuth);
+
+            const cfgModal = document.getElementById('google-config-modal');
+            document.getElementById('open-google-config-btn').addEventListener('click', () => {
+                document.getElementById('google-client-id-input').value = getGoogleClientId();
+                cfgModal.classList.remove('hidden');
+                cfgModal.classList.add('flex');
+            });
+            document.getElementById('close-google-config').addEventListener('click', () => {
+                cfgModal.classList.add('hidden');
+                cfgModal.classList.remove('flex');
+            });
+
+            document.getElementById('save-client-id-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const val = document.getElementById('google-client-id-input').value.trim();
+                localStorage.setItem('fh_google_client_id', val);
+                cfgModal.classList.add('hidden');
+                cfgModal.classList.remove('flex');
+                startRealGoogleOAuth();
+            });
+        }
+    </script>
+</body>
+</html>

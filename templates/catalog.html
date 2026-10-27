@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог 54+ оголошень — FreelanceHub Україна</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <header class="fixed top-0 left-0 right-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+            <a href="index.html" class="font-display text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-accent-dynamic text-white flex items-center justify-center text-base font-bold">F</span>
+                <span>FreelanceHub</span>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-600">
+                <a href="index.html" class="hover:text-slate-900">Головна</a>
+                <a href="catalog.html" class="text-accent-dynamic flex items-center gap-1.5">
+                    <span>Каталог оголошень</span>
+                    <span class="px-2 py-0.5 rounded-full bg-blue-50 text-accent-dynamic text-[10px]" id="nav-total-services">54</span>
+                </a>
+                <a href="projects.html" class="hover:text-slate-900 flex items-center gap-1.5">
+                    <span>Мої проєкти</span>
+                    <span class="projects-count-badge px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px]">0</span>
+                </a>
+                <a href="profile.html" class="hover:text-slate-900">Мій профіль</a>
+            </nav>
+
+            <div class="flex items-center gap-2.5">
+                <button id="open-saved-btn" type="button" class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 flex items-center gap-1.5 shadow-sm">
+                    <span>♥</span>
+                    <span class="saved-count-badge bg-accent-dynamic text-white px-1.5 py-0.2 rounded-full text-[10px]">0</span>
+                </button>
+                <button type="button" id="open-add-service-btn" class="open-add-service-modal-btn px-3.5 py-2 rounded-xl bg-accent-dynamic text-white font-bold text-xs shadow-sm">
+                    + Додати свою послугу
+                </button>
+                <div id="header-auth-Slot"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+                <div class="eyebrow">Повна база послуг</div>
+                <h1 class="font-display text-3xl sm:text-5xl font-extrabold text-slate-900">Каталог перевірених оголошень</h1>
+                <p class="text-sm text-slate-500 mt-1">Чесні українські ціни без посередників — включно з вашими власними оголошеннями</p>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
+                <button type="button" class="open-add-service-modal-btn btn btn-primary">+ Виставити свою послугу</button>
+                <button type="button" class="open-brief-modal-btn btn btn-secondary">Замовити індивідуальний проєкт</button>
+            </div>
+        </div>
+
+        <section id="my-catalog-services-section" class="hidden mb-10 p-6 rounded-3xl border-2 border-emerald-500/30 bg-emerald-50/40">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Ваша вітрина в каталозі</span>
+                    <h2 class="font-display text-2xl font-extrabold text-slate-900">Виставлені вами оголошення (<span id="my-catalog-count">0</span>)</h2>
+                </div>
+                <button type="button" class="open-add-service-modal-btn btn btn-primary !min-h-[38px] text-xs">+ Додати ще послугу</button>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="my-catalog-grid"></div>
+        </section>
+
+        <div class="bg-white rounded-3xl border border-slate-200 p-5 mb-8 shadow-sm space-y-5">
+            <div class="grid md:grid-cols-12 gap-4 items-center">
+                <div class="md:col-span-5 relative">
+                    <input id="cat-search" type="text" placeholder="Пошук серед усіх послуг (наприклад: React, логотип, n8n, SEO, бот)..." class="w-full bg-slate-50 rounded-xl border border-slate-200 focus:border-blue-600 focus:bg-white px-4 py-2.5 text-xs outline-none">
+                </div>
+
+                <div class="md:col-span-4 flex items-center gap-3 px-2">
+                    <span class="text-xs font-bold text-slate-500 whitespace-nowrap">Макс. ціна:</span>
+                    <input id="cat-price-range" type="range" min="15" max="5000" step="15" value="5000">
+                    <span id="cat-price-label" class="text-xs font-extrabold text-accent-dynamic whitespace-nowrap">Без ліміту</span>
+                </div>
+
+                <div class="md:col-span-3">
+                    <select id="cat-sort" class="w-full bg-slate-50 rounded-xl border border-slate-200 px-3.5 py-2.5 text-xs font-bold text-slate-700 outline-none">
+                        <option value="default">Спочатку ваші та рекомендовані</option>
+                        <option value="price-asc">Найдешевші спочатку</option>
+                        <option value="price-desc">Найдорожчі спочатку</option>
+                        <option value="rating">За найвищим рейтингом</option>
+                        <option value="reviews">За кількістю відгуків</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
+                <div class="flex flex-wrap gap-2" id="catalog-pills">
+                    <button type="button" class="filter-pill active" data-cat="Усі">Усі оголошення</button>
+                    <button type="button" class="filter-pill" data-cat="Мої">★ Мої оголошення (<span id="pill-my-count">0</span>)</button>
+                    <button type="button" class="filter-pill" data-cat="Розробка">💻 Розробка</button>
+                    <button type="button" class="filter-pill" data-cat="Дизайн">🎨 Дизайн</button>
+                    <button type="button" class="filter-pill" data-cat="Маркетинг">📈 Маркетинг</button>
+                    <button type="button" class="filter-pill" data-cat="ШІ та Дані">🤖 ШІ та n8n</button>
+                    <button type="button" class="filter-pill" data-cat="Стратегія">🎬 Відео, Тексти, Стратегія</button>
+                </div>
+                <div id="catalog-count-label" class="text-xs font-bold text-slate-500">Знайдено 54 оголошення</div>
+            </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="catalog-grid"></div>
+
+        <div id="catalog-empty" class="hidden py-16 text-center bg-white rounded-3xl border border-slate-200">
+            <p class="font-display text-xl font-bold mb-2">За цими фільтрами нічого не знайдено</p>
+            <button type="button" id="cat-reset-btn" class="btn btn-secondary mt-2">Скинути фільтри</button>
+        </div>
+    </main>
+
+    <script>
+        (function loadCoreScript() {
+            const paths = ['script.js', '../script.js', '../static/script.js'];
+            let idx = 0;
+            function tryNext() {
+                if (idx >= paths.length) return;
+                const s = document.createElement('script');
+                s.src = paths[idx++];
+                s.onload = initCatalogPage;
+                s.onerror = tryNext;
+                document.body.appendChild(s);
+            }
+            tryNext();
+        })();
+
+        function initCatalogPage() {
+            let activeCat = 'Усі';
+            let query = '';
+            let maxPrice = 5000;
+            let sortBy = 'default';
+
+            window.refreshServiceGrids = function() {
+                const all = getAllServices();
+                const myCustom = all.filter(s => s.isCustom);
+
+                document.getElementById('nav-total-services').textContent = all.length;
+                const pillMyCount = document.getElementById('pill-my-count');
+                if (pillMyCount) pillMyCount.textContent = myCustom.length;
+
+                const mySection = document.getElementById('my-catalog-services-section');
+                const myGrid = document.getElementById('my-catalog-grid');
+                const myCountEl = document.getElementById('my-catalog-count');
+
+                if (myCustom.length > 0 && activeCat === 'Усі' && !query) {
+                    mySection.classList.remove('hidden');
+                    myCountEl.textContent = myCustom.length;
+                    myGrid.innerHTML = myCustom.map(createServiceCardHTML).join('');
+                } else {
+                    mySection.classList.add('hidden');
+                }
+
+                let list = all.filter(s => {
+                    const matchCat = activeCat === 'Усі'
+                        ? true
+                        : (activeCat === 'Мої' ? Boolean(s.isCustom) : s.cat === activeCat);
+                    const matchPrice = s.price <= maxPrice || Boolean(s.isCustom);
+                    const q = query.toLowerCase().trim();
+                    const matchQ = !q || s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q) || s.name.toLowerCase().includes(q) || s.city.toLowerCase().includes(q);
+                    return matchCat && matchPrice && matchQ;
+                });
+
+                if (sortBy === 'default') {
+                    list.sort((a, b) => (b.isCustom ? 1 : 0) - (a.isCustom ? 1 : 0));
+                } else if (sortBy === 'price-asc') {
+                    list.sort((a, b) => a.price - b.price);
+                } else if (sortBy === 'price-desc') {
+                    list.sort((a, b) => b.price - a.price);
+                } else if (sortBy === 'rating') {
+                    list.sort((a, b) => b.rating - a.rating);
+                } else if (sortBy === 'reviews') {
+                    list.sort((a, b) => b.rev - a.rev);
+                }
+
+                document.getElementById('catalog-count-label').textContent = `Показано ${list.length} з ${all.length} оголошень`;
+                const grid = document.getElementById('catalog-grid');
+                const empty = document.getElementById('catalog-empty');
+
+                if (list.length === 0) {
+                    grid.innerHTML = '';
+                    empty.classList.remove('hidden');
+                } else {
+                    empty.classList.add('hidden');
+                    grid.innerHTML = list.map(createServiceCardHTML).join('');
+                }
+            };
+
+            window.refreshServiceGrids();
+
+            document.getElementById('catalog-pills').addEventListener('click', (e) => {
+                const btn = e.target.closest('.filter-pill');
+                if (!btn) return;
+                document.querySelectorAll('#catalog-pills .filter-pill').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeCat = btn.getAttribute('data-cat');
+                window.refreshServiceGrids();
+            });
+
+            document.getElementById('cat-search').addEventListener('input', (e) => {
+                query = e.target.value;
+                window.refreshServiceGrids();
+            });
+
+            document.getElementById('cat-price-range').addEventListener('input', (e) => {
+                maxPrice = parseInt(e.target.value, 10);
+                document.getElementById('cat-price-label').textContent = maxPrice >= 5000 ? 'Без ліміту' : `до $${maxPrice}`;
+                window.refreshServiceGrids();
+            });
+
+            document.getElementById('cat-sort').addEventListener('change', (e) => {
+                sortBy = e.target.value;
+                window.refreshServiceGrids();
+            });
+
+            document.getElementById('cat-reset-btn').addEventListener('click', () => {
+                activeCat = 'Усі';
+                query = '';
+                maxPrice = 5000;
+                sortBy = 'default';
+                document.getElementById('cat-search').value = '';
+                document.getElementById('cat-price-range').value = 5000;
+                document.getElementById('cat-price-label').textContent = 'Без ліміту';
+                document.getElementById('cat-sort').value = 'default';
+                document.querySelectorAll('#catalog-pills .filter-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-cat') === 'Усі'));
+                window.refreshServiceGrids();
+            });
+        }
+    </script>
+</body>
+</html>
