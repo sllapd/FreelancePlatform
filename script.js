@@ -1,9 +1,8 @@
 // Курс валюти для автоматичного перерахунку цін із доларів у гривні
 const UAH_RATE = 41.5;
 
-
 // Поле для збереження базового Google Client ID (для авторизації OAuth 2.0)
-const DEFAULT_GOOGLE_CLIENT_ID = '1049187668087-avtsf7i7kqa3r5f39eam9rfjfqfe8f1a.apps.googleusercontent.com';
+const DEFAULT_GOOGLE_CLIENT_ID = '1049187668087-avtsf7i7kqa3r5f39eam9rfjfqfe8fla.apps.googleusercontent.com';
 
 // Функція генерації стандартної SVG-аватарки (силует користувача), закодованої через encodeURIComponent
 function getDefaultAvatar(bgHex = 'cbd5e1', fgHex = '64748b') {
@@ -254,7 +253,7 @@ function getUsersList() {
 
 // Зчитування збереженого ключа Google Client ID для роботи Google OAuth 2.0
 function getGoogleClientId() {
-    return localStorage.getItem('fh_google_client_id') || DEFAULT_GOOGLE_CLIENT_ID || '';
+    return DEFAULT_GOOGLE_CLIENT_ID;
 }
 
 // Палітра акцентних кольорів сайту, які користувач може змінювати у своєму профілі
