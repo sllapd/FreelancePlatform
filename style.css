@@ -1,3 +1,4 @@
+/* Базові CSS-змінні для світлої теми (кольори фону, тексту, рамок, тіней та акцентів) */
 :root {
     --bg: #f8fafc;
     --bg-soft: #f1f5f9;
@@ -15,6 +16,7 @@
     --radius-lg: 20px;
 }
 
+/* Змінні для темної теми — активуються, коли на тегу <html> є клас .dark-mode */
 html.dark-mode {
     --bg: #0b0f19;
     --bg-soft: #111827;
@@ -35,6 +37,7 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Основні параметри сторінки: шрифт Inter, плавний перехід кольорів при зміні теми */
 body {
     margin: 0;
     background-color: var(--bg) !important;
@@ -45,6 +48,7 @@ body {
     transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+/* Адаптація шапки, карток та полів вводу під темну тему */
 html.dark-mode header {
     background-color: rgba(15, 23, 42, 0.92) !important;
     border-color: var(--line) !important;
@@ -93,7 +97,8 @@ html.dark-mode textarea::placeholder {
     color: #64748b !important;
 }
 
-html.dark-mode .hero {
+html.dark-mode /* Градієнтний фон першого екрана (Hero-секції) на головній сторінці */
+.hero {
     background: radial-gradient(circle at 85% 15%, var(--accent-soft), transparent 45%),
                 linear-gradient(180deg, #0f172a 0%, #0b0f19 100%) !important;
 }
@@ -119,6 +124,7 @@ a {
     letter-spacing: -0.025em;
 }
 
+/* Динамічні класи акценту — змінюють колір елементів при виборі теми в профілі */
 .bg-accent-dynamic { background-color: var(--accent) !important; }
 .text-accent-dynamic { color: var(--accent) !important; }
 .border-accent-dynamic { border-color: var(--accent) !important; }
@@ -140,6 +146,7 @@ a {
     text-transform: uppercase;
 }
 
+/* Стилі кнопки перемикання теми (сонце / місяць) у шапці сайту */
 .theme-toggle-btn {
     width: 38px;
     height: 38px;
@@ -162,6 +169,7 @@ a {
     transform: translateY(-1px);
 }
 
+/* Універсальні стилі для всіх кнопок платформи (основні, другорядні, видалення) */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -215,6 +223,7 @@ a {
     color: #ffffff !important;
 }
 
+/* Стилі карток послуг, відгуків та проєктів із плавним підняттям при наведенні (hover) */
 .portfolio-card,
 .testimonial-card,
 .process-card,
@@ -306,6 +315,7 @@ a {
     font-weight: 800;
 }
 
+/* Кнопки-пігулки для фільтрації категорій та вибору параметрів у калькуляторі */
 .filter-pill,
 .calc-pill {
     padding: 0.5rem 1rem;
@@ -337,6 +347,7 @@ a {
     border-color: var(--accent) !important;
 }
 
+/* Кастомна стилізація повзунка (range slider) для калькулятора та фільтра ціни */
 input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -359,6 +370,7 @@ input[type="range"]::-webkit-slider-thumb {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Градієнтні теми обкладинки (банера) в особистому кабінеті користувача */
 .cover-ocean { background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%); }
 .cover-emerald { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
 .cover-violet { background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%); }

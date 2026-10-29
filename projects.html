@@ -48,6 +48,7 @@
             <button type="button" class="open-brief-modal-btn btn btn-primary">+ Додати нову заявку</button>
         </div>
 
+        <!-- Панель фільтрації замовлень та заявок за статусом (Усі, Активні, В роботі, Завершені) -->
         <div class="flex flex-wrap gap-2 mb-6" id="proj-filter-bar">
             <button type="button" class="filter-pill active" data-filter="all">Усі замовлення</button>
             <button type="button" class="filter-pill" data-filter="Активна">🟢 Активні</button>
@@ -75,6 +76,7 @@
 
         let currentProjFilter = 'all';
 
+        // Відмальовування списку всіх створених заявок і замовлених послуг із кнопками редагування, зміни статусу та видалення
         window.renderProjectsPage = function() {
             const listEl = document.getElementById('projects-board-list');
             if (!listEl) return;
@@ -149,6 +151,7 @@
             }).join('');
         };
 
+        // Обробники кліків для редагування заявки, видалення та миттєвої зміни статусу через випадаючий список
         function initProjectsPage() {
             window.renderProjectsPage();
 

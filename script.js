@@ -1,6 +1,11 @@
+// Курс валюти для автоматичного перерахунку цін із доларів у гривні
 const UAH_RATE = 41.5;
-const DEFAULT_GOOGLE_CLIENT_ID = '';
 
+
+// Поле для збереження базового Google Client ID (для авторизації OAuth 2.0)
+const DEFAULT_GOOGLE_CLIENT_ID = '1049187668087-avtsf7i7kqa3r5f39eam9rfjfqfe8fla.apps.googleusercontent.com';
+
+// Функція генерації стандартної SVG-аватарки (силует користувача), закодованої через encodeURIComponent
 function getDefaultAvatar(bgHex = 'cbd5e1', fgHex = '64748b') {
     const cleanBg = bgHex.replace('#', '');
     const cleanFg = fgHex.replace('#', '');
@@ -10,10 +15,12 @@ function getDefaultAvatar(bgHex = 'cbd5e1', fgHex = '64748b') {
 
 const DEFAULT_AVATAR = getDefaultAvatar('e2e8f0', '64748b');
 
+// Допоміжна функція для коректного формування посилань між сторінками
 function resolvePagePath(pageFileName) {
     return pageFileName;
 }
 
+// Функція стиснення завантажених із комп'ютера фотографій через HTML5 Canvas (щоб не переповнити пам'ять localStorage)
 function compressUploadedImage(file, maxWidth = 900, quality = 0.82) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -41,6 +48,7 @@ function compressUploadedImage(file, maxWidth = 900, quality = 0.82) {
     });
 }
 
+// Базовий масив із 54 готових оголошень (поділений на 5 категорій: Розробка, Дизайн, Маркетинг, ШІ та Дані, Стратегія)
 const defaultServices = [
     { id: 's1', title: 'Адаптивний лендінг під ключ (HTML/CSS/JS)', cat: 'Розробка', price: 65, time: '3 дні', rating: 4.9, rev: 84, name: 'Олександр С.', city: 'Київ', img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80', desc: 'Швидка та чиста верстка посадкової сторінки з анімаціями, формою заявки у Telegram та зеленою зоною PageSpeed 95+.' },
     { id: 's2', title: 'Розробка Telegram-бота з оплатою та адмінкою', cat: 'Розробка', price: 45, time: '2 дні', rating: 5.0, rev: 62, name: 'Максим Т.', city: 'Дніпро', img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80', desc: 'Створення Telegram-бота на Python (aiogram) або Node.js. Підключення Monobank/LiqPay, розсилки та база користувачів.' },
@@ -98,8 +106,10 @@ const defaultServices = [
     { id: 's54', title: 'Комплексний супровід запуску цифрового продукту', cat: 'Стратегія', price: 90, time: '5 днів', rating: 4.9, rev: 38, name: 'Михайло К.', city: 'Дніпро', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80', desc: 'Дорожня карта від ідеї до перших 100 платних клієнтів: офер, воронка, підключення оплат і трафік.' }
 ];
 
+// Початковий масив заявок на проєкти
 const defaultProjects = [];
 
+// Дані для інтерактивного блоку «Як працює платформа» (3 кроки на головній сторінці)
 const processSteps = [
     {
         index: '01',
@@ -130,16 +140,19 @@ const processSteps = [
     }
 ];
 
+// Масив відгуків замовників для головної сторінки
 const defaultTestimonials = [
     { name: 'Микола Ф.', role: 'Засновник інтернет-магазину, Київ', metric: 'Бюджет лише $95', text: 'Замовили сайт і налаштування Google Ads. Ціни абсолютно адекватні, а якість у рази вища за дорогі студії!', rating: 5, avatar: DEFAULT_AVATAR },
     { name: 'Світлана М.', role: 'Власниця бренду одягу, Дніпро', metric: 'Запуск за 3 дні', text: 'Дуже зручно, що всі мої заявки видно в особистому кабінеті, можна легко змінити опис чи бюджет. Знайшли чудового таргетолога!', rating: 5, avatar: DEFAULT_AVATAR },
     { name: 'Артем Б.', role: 'Керівник IT-проєкту, Львів', metric: 'Автоматизація n8n за $50', text: 'Авторизувався через Google, оформив профіль і замовив автоматизацію в n8n. Усе працює бездоганно!', rating: 5, avatar: DEFAULT_AVATAR }
 ];
 
+// Отримання списку власних послуг користувача зі сховища браузера (localStorage)
 function getCustomServices() {
     try { return JSON.parse(localStorage.getItem('fh_custom_services') || '[]'); } catch { return []; }
 }
 
+// Збереження власних послуг у localStorage та миттєве оновлення сітки каталогу й профілю
 function saveCustomServices(list) {
     localStorage.setItem('fh_custom_services', JSON.stringify(list));
     if (typeof window.refreshServiceGrids === 'function') window.refreshServiceGrids();
@@ -147,6 +160,7 @@ function saveCustomServices(list) {
     if (typeof window.renderProfileProjects === 'function') window.renderProfileProjects();
 }
 
+// Видалення власної послуги за її ID з каталогу та пам'яті браузера
 function deleteCustomService(serviceId) {
     const updated = getCustomServices().filter(s => s.id !== serviceId);
     saveCustomServices(updated);
@@ -154,6 +168,7 @@ function deleteCustomService(serviceId) {
     showToast('Послугу видалено', 'Ваше оголошення було видалено з каталогу.');
 }
 
+// Перевірка коректності аватарки (захист від пошкоджених посилань)
 function sanitizeAvatar(av) {
     if (!av || (av.startsWith('data:image/svg+xml') && av.includes('"'))) {
         return DEFAULT_AVATAR;
@@ -161,6 +176,7 @@ function sanitizeAvatar(av) {
     return av;
 }
 
+// Об'єднання власних послуг користувача та 54 базових послуг в єдиний список із розрахунком ціни в грн
 function getAllServices() {
     return [...getCustomServices(), ...defaultServices].map(s => ({
         ...s,
@@ -176,6 +192,7 @@ function getAllServices() {
     }));
 }
 
+// Зчитування всіх створених заявок і замовлень із localStorage
 function getProjects() {
     try {
         const stored = localStorage.getItem('fh_projects');
@@ -184,6 +201,7 @@ function getProjects() {
     return defaultProjects;
 }
 
+// Збереження оновленого списку заявок у localStorage та оновлення лічильника в шапці
 function saveProjects(list) {
     localStorage.setItem('fh_projects', JSON.stringify(list));
     updateHeaderBadges();
@@ -191,15 +209,18 @@ function saveProjects(list) {
     if (typeof window.renderProfileProjects === 'function') window.renderProfileProjects();
 }
 
+// Отримання списку ID обраних послуг (сердечка «Обране»)
 function getSavedIds() {
     try { return new Set(JSON.parse(localStorage.getItem('fh_saved_ids') || '[]')); } catch { return new Set(); }
 }
 
+// Збереження списку обраних послуг у localStorage
 function saveSavedIds(setObj) {
     localStorage.setItem('fh_saved_ids', JSON.stringify([...setObj]));
     updateHeaderBadges();
 }
 
+// Перевірка поточної сесії: повертає дані авторизованого користувача або null
 function getCurrentUser() {
     try {
         const u = localStorage.getItem('fh_current_user');
@@ -210,6 +231,7 @@ function getCurrentUser() {
     } catch { return null; }
 }
 
+// Авторизація або оновлення даних профілю користувача та збереження в базу fh_users
 function setCurrentUser(userObj) {
     if (!userObj) {
         localStorage.removeItem('fh_current_user');
@@ -225,14 +247,17 @@ function setCurrentUser(userObj) {
     renderAuthHeader();
 }
 
+// Отримання списку всіх зареєстрованих акаунтів для перевірки логіна й пароля
 function getUsersList() {
     try { return JSON.parse(localStorage.getItem('fh_users') || '[]'); } catch { return []; }
 }
 
+// Зчитування збереженого ключа Google Client ID для роботи Google OAuth 2.0
 function getGoogleClientId() {
     return localStorage.getItem('fh_google_client_id') || DEFAULT_GOOGLE_CLIENT_ID || '';
 }
 
+// Палітра акцентних кольорів сайту, які користувач може змінювати у своєму профілі
 const ACCENT_PALETTES = {
     '#2563eb': { main: '#2563eb', hover: '#1d4ed8', soft: '#eff6ff' },
     '#059669': { main: '#059669', hover: '#047857', soft: '#ecfdf5' },
@@ -241,6 +266,7 @@ const ACCENT_PALETTES = {
     '#e11d48': { main: '#e11d48', hover: '#be123c', soft: '#fff1f2' }
 };
 
+// Динамічна зміна CSS-змінних (--accent) для миттєвого перефарбування кнопок та елементів сайту
 function applyAccentTheme(hex) {
     const pal = ACCENT_PALETTES[hex] || ACCENT_PALETTES['#2563eb'];
     document.documentElement.style.setProperty('--accent', pal.main);
@@ -249,10 +275,12 @@ function applyAccentTheme(hex) {
     localStorage.setItem('fh_theme_accent', pal.main);
 }
 
+// Перевірка поточної теми оформлення: світла (light) або темна (dark)
 function getColorMode() {
     return localStorage.getItem('fh_color_mode') || 'light';
 }
 
+// Перемикання класу dark-mode на тегу <html> та оновлення іконки сонця/місяця в шапці
 function applyColorMode(mode) {
     const isDark = mode === 'dark';
     document.documentElement.classList.toggle('dark-mode', isDark);
@@ -263,6 +291,7 @@ function applyColorMode(mode) {
     });
 }
 
+// Обробник кліку по кнопці зміни теми (Світла / Темна)
 function toggleColorMode() {
     const nextMode = getColorMode() === 'dark' ? 'light' : 'dark';
     applyColorMode(nextMode);
@@ -272,6 +301,7 @@ function toggleColorMode() {
     );
 }
 
+// Автоматичний запуск збереженої теми та кольору акценту одразу при відкритті сторінки
 (function initTheme() {
     const user = getCurrentUser();
     const savedAccent = (user && user.accentColor) || localStorage.getItem('fh_theme_accent') || '#2563eb';
@@ -279,6 +309,7 @@ function toggleColorMode() {
     applyColorMode(getColorMode());
 })();
 
+// Функція показу спливаючих сповіщень (Toast) у правому нижньому кутку екрана
 function showToast(message, subtext = '', linkUrl = '', linkText = '') {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -307,6 +338,7 @@ function showToast(message, subtext = '', linkUrl = '', linkText = '') {
     }, 4500);
 }
 
+// Оновлення числових лічильників на кнопках «Обране» та «Мої проєкти» у шапці
 function updateHeaderBadges() {
     const savedCount = getSavedIds().size;
     const projectsCount = getProjects().length;
@@ -315,6 +347,7 @@ function updateHeaderBadges() {
     document.querySelectorAll('.projects-count-badge').forEach(el => el.textContent = projectsCount);
 }
 
+// Генерація правого блоку шапки: кнопка теми, обране, додавання послуги та віджет акаунту з аватаркою
 function renderAuthHeader() {
     const headerFlex = document.querySelector('header .max-w-7xl');
     if (headerFlex && !document.getElementById('global-theme-toggle')) {
@@ -381,6 +414,7 @@ function renderAuthHeader() {
     updateHeaderBadges();
 }
 
+// Генерація HTML-коду однієї картки послуги для головної сторінки та каталогу
 function createServiceCardHTML(item) {
     const savedSet = getSavedIds();
     const isSaved = savedSet.has(item.id);
@@ -464,6 +498,7 @@ function createServiceCardHTML(item) {
 
 let pendingCustomCoverDataUrl = '';
 
+// Динамічне вбудовування глобальних модальних вікон (деталі послуги, додавання послуги, створення заявки, панель обраного)
 function ensureGlobalModals() {
     if (document.getElementById('global-modals-injected')) return;
 
@@ -647,6 +682,7 @@ function ensureGlobalModals() {
     document.body.appendChild(wrapper);
 }
 
+// Відкриття модального вікна створення нової або редагування існуючої власної послуги
 function openAddServiceModal(editServiceObj = null) {
     ensureGlobalModals();
     const user = getCurrentUser();
@@ -715,6 +751,7 @@ function openAddServiceModal(editServiceObj = null) {
     modal.classList.add('flex');
 }
 
+// Відкриття модального вікна з детальним описом обраної послуги, ціною та кнопкою замовлення
 function openProjectModal(serviceId) {
     ensureGlobalModals();
     const item = getAllServices().find(s => s.id === serviceId);
@@ -811,6 +848,7 @@ function openProjectModal(serviceId) {
     };
 }
 
+// Відкриття форми створення або редагування заявки на проєкт (з перевіркою авторизації)
 function openBriefModal(options = {}) {
     ensureGlobalModals();
     const user = getCurrentUser();
@@ -896,6 +934,7 @@ function openBriefModal(options = {}) {
     modal.classList.add('flex');
 }
 
+// Закриття будь-якого модального вікна за його ID
 function closeModalById(id) {
     const el = document.getElementById(id);
     if (el) {
@@ -904,6 +943,7 @@ function closeModalById(id) {
     }
 }
 
+// Додавання або видалення послуги зі списку «Обране» при кліку на сердечко
 function toggleSaveService(id) {
     const setObj = getSavedIds();
     const srv = getAllServices().find(s => s.id === id);
@@ -919,6 +959,7 @@ function toggleSaveService(id) {
     if (typeof window.refreshServiceGrids === 'function') window.refreshServiceGrids();
 }
 
+// Відмальовування списку збережених послуг у боковій висувній панелі «Обране»
 function renderSavedDrawerList() {
     const listEl = document.getElementById('saved-items-list');
     if (!listEl) return;
@@ -947,6 +988,7 @@ function renderSavedDrawerList() {
     `).join('');
 }
 
+// Головна функція запуску платформи: прив'язка всіх кліків, завантаження файлів з ПК та обробка форм
 function initCorePlatform() {
     if (window.__fhCoreInitialized) return;
     window.__fhCoreInitialized = true;

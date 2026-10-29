@@ -38,6 +38,7 @@
         </div>
     </header>
 
+    <!-- Захисний екран: блокує доступ до профілю, якщо користувач ще не увійшов у свій акаунт -->
     <section id="unauthenticated-guard" class="hidden pt-32 pb-20 px-4 max-w-lg mx-auto text-center">
         <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-xl space-y-5">
             <div class="w-20 h-20 rounded-full bg-slate-100 mx-auto flex items-center justify-center">
@@ -58,6 +59,7 @@
         </div>
     </section>
 
+    <!-- Основний кабінет авторизованого користувача: банер, аватарка, анкета, мої послуги та мої замовлення -->
     <main id="authenticated-profile-content" class="hidden pt-20 pb-20 max-w-7xl mx-auto px-4 sm:px-8">
         <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm mb-8">
             <div id="profile-banner-preview" class="h-44 sm:h-56 cover-ocean relative transition-all">
@@ -116,6 +118,7 @@
                 <div class="eyebrow">Налаштування та Кастомізація</div>
                 <h2 class="font-display text-2xl font-extrabold text-slate-900 mb-6">Редагувати особистий профіль</h2>
 
+                <!-- Форма повного редагування профілю: ім'я, нікнейм, роль, місто, погодинна ставка, теги навичок та колір сайту -->
                 <form id="profile-customization-form" class="space-y-4">
                     <div class="grid sm:grid-cols-2 gap-4">
                         <div>
@@ -266,6 +269,7 @@
                 <img src="${src}" class="preset-av w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-slate-200 hover:border-blue-600">
             `).join('');
 
+            // Синхронізація даних користувача з інтерфейсом профілю та полями форми
             function syncProfileUI() {
                 document.getElementById('profile-banner-preview').className = `h-44 sm:h-56 relative transition-all ${user.cover || 'cover-ocean'}`;
                 document.getElementById('profile-avatar-preview').src = user.avatar || DEFAULT_AVATAR;
@@ -363,6 +367,7 @@
                 window.location.href = 'auth.html';
             });
 
+            // Відображення блоку «Виставлені мною послуги» з кнопками швидкого редагування та видалення
             window.renderProfileCustomServices = function() {
                 const box = document.getElementById('profile-custom-services-list');
                 if (!box) return;
@@ -403,6 +408,7 @@
                 `).join('');
             };
 
+            // Відображення блоку «Послуги та проєкти, які замовляю я» в особистому кабінеті
             window.renderProfileProjects = function() {
                 const box = document.getElementById('profile-projects-list');
                 if (!box) return;

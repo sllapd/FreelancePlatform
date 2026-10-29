@@ -58,6 +58,7 @@
             </div>
         </div>
 
+        <!-- Спеціальна вітрина виставлених користувачем власних оголошень у верхній частині каталогу -->
         <section id="my-catalog-services-section" class="hidden mb-10 p-6 rounded-3xl border-2 border-emerald-500/30 bg-emerald-50/40">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
                 <div>
@@ -69,6 +70,7 @@
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="my-catalog-grid"></div>
         </section>
 
+        <!-- Панель керування каталогом: живий пошук за словом, повзунок максимальної ціни, сортування та категорії -->
         <div class="bg-white rounded-3xl border border-slate-200 p-5 mb-8 shadow-sm space-y-5">
             <div class="grid md:grid-cols-12 gap-4 items-center">
                 <div class="md:col-span-5 relative">
@@ -129,12 +131,14 @@
             tryNext();
         })();
 
+        // Логіка сторінки каталогу: фільтрація 54+ оголошень, живий пошук, сортування за ціною та рейтингом
         function initCatalogPage() {
             let activeCat = 'Усі';
             let query = '';
             let maxPrice = 5000;
             let sortBy = 'default';
 
+            // Головна функція оновлення сітки оголошень при будь-якій зміні фільтра або додаванні нової послуги
             window.refreshServiceGrids = function() {
                 const all = getAllServices();
                 const myCustom = all.filter(s => s.isCustom);

@@ -41,6 +41,7 @@
             </div>
 
             <div class="space-y-2 mb-5">
+                <!-- Кнопка реальної авторизації через протокол Google OAuth 2.0 -->
                 <button type="button" id="real-google-oauth-btn" class="w-full py-3 px-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-bold text-xs text-slate-800 flex items-center justify-center gap-3 shadow-sm transition-all">
                     <svg class="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
@@ -52,7 +53,7 @@
                 </button>
                 <div class="flex items-center justify-between text-[11px]">
                     <span id="origin-status-badge" class="text-slate-400"></span>
-                    <button type="button" id="open-google-config-btn" class="font-semibold text-slate-500 hover:text-blue-600 underline">
+                    <button type="button" id="open-google-config-btn" class="hidden font-semibold text-slate-500 hover:text-blue-600 underline">
                         ⚙️ Налаштувати Client ID та URI
                     </button>
                 </div>
@@ -71,6 +72,7 @@
 
             <div id="auth-error-box" class="hidden mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-xs font-semibold text-red-600"></div>
 
+            <!-- Форма входу для зареєстрованих користувачів (перевірка Email та пароля) -->
             <form id="login-form" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-800 mb-1">Ваш Email *</label>
@@ -83,6 +85,7 @@
                 <button type="submit" class="btn btn-primary w-full">Увійти</button>
             </form>
 
+            <!-- Форма створення нового акаунту зі збереженням у базу користувачів localStorage -->
             <form id="register-form" class="hidden space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-800 mb-1">Ваше Ім'я та Прізвище *</label>
@@ -273,6 +276,7 @@
                 }
             }
 
+            // Запит до офіційного Google API (userinfo) для отримання імені, пошти та фото після успішного входу
             async function fetchGoogleUserProfile(accessToken) {
                 try {
                     const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
@@ -303,6 +307,7 @@
                 }
             }
 
+            // Запуск вікна вибору Google-акаунту через Google Identity Services SDK або прямий OAuth-редірект
             function startRealGoogleOAuth() {
                 clearError();
                 if (window.location.protocol === 'file:') {
